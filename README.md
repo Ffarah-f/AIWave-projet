@@ -675,7 +675,7 @@ L’application permet :
 | Frontend        | HTML, CSS, JavaScript |
 | Design          | Figma                 |
 | Backend         | Node.js (JavaScript)  |
-| API IA          | Gemini       |
+| API IA          | Gemini                |
 | Base de données | Firebase Firestore    |
 | Sécurité        | .env                  |
 | Versioning      | GitHub                |
