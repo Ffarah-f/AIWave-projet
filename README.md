@@ -205,4 +205,54 @@ L’application devra être accessible en ligne sans création de compte obligat
 
 Aucune contrainte technique n’est imposée à ce stade, mais le projet devra être pensé de manière évolutive afin de permettre, à terme, l’ajout d’une API, d’intégrations avec d’autres outils ou encore le développement d’une version mobile. Le client souhaite avant tout disposer rapidement d’une première version fonctionnelle (MVP) centrée sur les fonctionnalités essentielles : saisie de texte, traduction contextuelle, choix de langue et obtention d’un résultat rapide.
 
+### Périmètre et Hors-Périmètre
 
+# ✅ Périmètre du projet 
+
+Le projet consiste à développer une application web permettant :
+
+*   La **saisie de texte** dans une interface simple
+*   La **sélection de la langue source et cible** (anglais, français, espagnol)
+*   La **traduction via un modèle d’IA** (appel API type OpenAI, DeepL, etc.)
+*   La **prise en compte du contexte via des instructions envoyées au modèle** (ex : ton formel/informel, contexte simple)
+*   L’**affichage rapide de la traduction**
+*   La **modification manuelle du texte traduit**
+*   Une **interface moderne, claire et intuitive**
+*   Un accès via navigateur (application en ligne nécessitant Internet)
+*   Historique des traductions
+*   Système de comptes utilisateurs
+
+👉 L’“intelligence” repose sur :
+
+*   l’utilisation du modèle IA
+*   la façon dont on construit la requête (prompt) pour améliorer la traduction
+
+***
+
+# ❌ Hors périmètre du projet (simplification pour étudiants)
+
+Pour garantir la faisabilité, les éléments suivants sont exclus :
+
+*   Création ou entraînement d’un **modèle d’IA personnalisé**
+*   Fine-tuning ou machine learning avancé
+*   Mode hors ligne
+*   Import de fichiers complexes (PDF, Word)
+*   Personnalisation avancée (profils, préférences détaillées)
+*   Apprentissage automatique basé sur les corrections
+*   Gestion avancée du contexte (analyse linguistique complexe)
+*   API publique
+*   Application mobile
+*   Intégrations tierces
+*   Optimisation haute performance ou gros volumes
+
+### Evaluations prévues
+
+Plusieurs fonctionnalités pourront être ajoutées dans des versions ultérieures afin d’enrichir l’application :
+
+*   Intégration de l’import/export de fichiers (PDF, Word, etc.)
+*    Mise en place d’un apprentissage basé sur les corrections utilisateurs
+*   Gestion plus fine du contexte linguistique (analyse plus avancée du texte)
+*   Développement d’une API publique pour permettre l’intégration avec d’autres outils
+*   Création d’une application mobile
+*   Ajout de nouvelles langues et variantes régionales
+*   Intégration avec des services externes (CMS, outils marketing, etc.)
