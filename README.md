@@ -43,6 +43,15 @@ Il peut ensuite :
 
 ---
 
+## 🤝 Contribution
+```markdown
+## 🤝 Contribution
+
+Ce projet est réalisé dans le cadre d’un travail étudiant.  
+Les contributeurs sont uniquement les membres de l’équipe projet (camarades de classe).  
+Merci de ne pas proposer de contributions externes pour le moment.
+
+
 # Raport V1
 
 Utilisation de copilot 365 pour les prompts
