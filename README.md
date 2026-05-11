@@ -139,10 +139,10 @@ Formats souhaités : PDF, Word, texte simple
 # 💻 Expérience utilisateur
 
 **Compte obligatoire ?**  
-→ Non, accès libre au départ
+→ Oui
 
 **Historique ?**  
-→ Pas indispensable pour le MVP
+→ Oui, préferablemment
 
 **Attentes design ?**  
 → Interface simple, moderne, intuitive
@@ -195,15 +195,22 @@ Formats souhaités : PDF, Word, texte simple
 
 ### Brief client amélioré
 
-Le client souhaite développer une application web de traduction contextuelle destinée à un usage à la fois professionnel et grand public. L’objectif principal est de proposer une alternative aux traducteurs classiques, en offrant des traductions plus naturelles, capables de s’adapter au sens global du texte, au ton (formel ou informel) et au contexte d’utilisation.
+Nous souhaitons créer une application web de traduction intelligente capable de produire des traductions plus naturelles que les outils classiques. L’objectif est de dépasser la simple traduction mot à mot en proposant des résultats adaptés au contexte et à l’usage réel.
 
-L’application devra permettre aux utilisateurs de saisir directement du texte ou d’importer des documents (PDF, Word, texte simple), puis de choisir une langue cible parmi au moins trois langues au lancement : anglais, français et espagnol. Le système devra produire une traduction rapide, en quelques secondes, tout en améliorant la qualité et la cohérence du rendu par rapport aux solutions classiques.
+L’application devra être accessible directement depuis un navigateur, sans installation, et offrir une expérience simple, rapide et intuitive. Elle s’adresse à la fois à des professionnels (marketing, communication, support) ainsi qu’au grand public.
 
-Une fonctionnalité de personnalisation est envisagée, permettant d’ajuster le ton (formel/informel) et éventuellement le domaine d’usage (marketing, technique, etc.), bien que certains aspects puissent être simplifiés dans un premier temps. Les utilisateurs devront également avoir la possibilité de modifier manuellement les traductions proposées.
+Les utilisateurs devront pouvoir saisir du texte, choisir une langue source et une langue cible (dans un premier temps : français, anglais et espagnol), puis obtenir une traduction rapidement. L’outil devra s’appuyer sur un modèle d’intelligence artificielle externe (comme OpenAI ou DeepL) pour générer les traductions.
 
-L’application devra être accessible en ligne sans création de compte obligatoire, avec une interface simple, moderne et intuitive. Les fonctionnalités de type historique, apprentissage basé sur les corrections ou gestion avancée des préférences ne sont pas prioritaires pour la première version, mais pourront être envisagées dans des évolutions futures.
+Une attention particulière sera portée à la prise en compte du contexte. Pour cela, l’utilisateur pourra définir des paramètres simples, comme le ton (formel ou informel), afin d’améliorer la qualité et la pertinence de la traduction.
 
-Aucune contrainte technique n’est imposée à ce stade, mais le projet devra être pensé de manière évolutive afin de permettre, à terme, l’ajout d’une API, d’intégrations avec d’autres outils ou encore le développement d’une version mobile. Le client souhaite avant tout disposer rapidement d’une première version fonctionnelle (MVP) centrée sur les fonctionnalités essentielles : saisie de texte, traduction contextuelle, choix de langue et obtention d’un résultat rapide.
+L’utilisateur devra également pouvoir modifier manuellement le texte traduit.
+
+L’application inclura un système de comptes utilisateurs avec inscription et connexion. Chaque utilisateur disposera d’un historique personnel de ses traductions, comprenant le texte source, le texte traduit, les langues utilisées et la date.
+
+En revanche, cette première version ne comprendra pas certaines fonctionnalités avancées comme l’import de fichiers (PDF ou Word), la création d’un modèle d’IA personnalisé, l’apprentissage basé sur les corrections, une API publique, une application mobile ou des intégrations avec d’autres outils.
+
+L’objectif de cette version est de valider le concept avec une solution fonctionnelle, simple et efficace, tout en laissant la possibilité d’ajouter des fonctionnalités plus avancées dans les versions futures.
+
 
 ### Périmètre et Hors-Périmètre
 
