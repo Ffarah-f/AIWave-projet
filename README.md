@@ -2,7 +2,22 @@
 
 ### Description du projet
 
-Une plateforme web permettant aux utilisateurs de traduire des textes en tenant compte du contexte dans lequel ils sont utilisés. 
+Le projet consiste à développer une application web de traduction intelligente qui va au-delà des traducteurs classiques en proposant des traductions plus naturelles et adaptées au contexte.
+L’idée centrale est de créer un outil simple à utiliser, accessible à tous, mais suffisamment performant pour répondre à des besoins professionnels.
+
+🎯 Ce que fait l’application
+
+L’utilisateur peut :
+
+*   saisir un texte
+*   choisir une langue source et une langue cible
+*   indiquer un ton (formel ou informel)
+*   obtenir une traduction rapide et contextualisée
+
+Il peut ensuite :
+
+*   modifier manuellement la traduction
+*   sauvegarder automatiquement ses traductions dans un historique personnel
 
 # Report V1
 
