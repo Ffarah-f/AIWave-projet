@@ -86,9 +86,9 @@ Voici une liste de questions pertinentes à poser au client pour mieux comprendr
 
 Ces questions permettront de lever les ambiguïtés du brief initial et de définir un cadre clair pour la suite du projet.
 
-### Réponses client 
+# Réponses client 
 
-# 🎯 Objectifs et vision
+### 🎯 Objectifs et vision
 
 **Quel est l’objectif principal de l’application ?**  
 → Usage **professionnel et grand public**
@@ -105,7 +105,7 @@ Ces questions permettront de lever les ambiguïtés du brief initial et de défi
 
 ***
 
-# 👤 Cibles utilisateurs
+### 👤 Cibles utilisateurs
 
 **Qui sont les utilisateurs principaux ?**  
 → Professionnels (marketing, support…) + grand public
@@ -118,7 +118,7 @@ Ces questions permettront de lever les ambiguïtés du brief initial et de défi
 
 ***
 
-# ⚙️ Fonctionnalités
+### ⚙️ Fonctionnalités
 
 **Types de contenus ?**  
 → Texte court + documents + e-mails
@@ -138,7 +138,7 @@ Formats souhaités : PDF, Word, texte simple
 
 ***
 
-# 🌍 Langues
+### 🌍 Langues
 
 **Langues au lancement ?**  
 → Anglais, Français, Espagnol (priorité) 
