@@ -296,7 +296,7 @@ Le projet consiste à développer une application web permettant :
 
 *   La **saisie de texte** dans une interface simple
 *   La **sélection de la langue source et cible** 
-*   La **traduction via un modèle d’IA** (appel API type OpenAI, DeepL, etc.)
+*   La **traduction via un modèle d’IA** (appel API type Gemini)
 *   La **prise en compte du contexte via des instructions envoyées au modèle** (ex : ton formel/informel, contexte simple)
 *   L’**affichage rapide de la traduction**
 *   La **modification manuelle du texte traduit**
@@ -398,8 +398,6 @@ L’application permet :
     *   nombre de traductions
     *   volume de texte
 
-👉 Objectif : couvrir les coûts liés à l’API
-
 ***
 
 ## 💻 Expérience utilisateur
@@ -412,7 +410,7 @@ L’application permet :
 
 ## 🧠 Fonctionnement
 
-*   Utilisation d’un **modèle d’IA externe** (OpenAI, DeepL, etc.)
+*   Utilisation d’un **modèle d’IA externe** 
 *   L’intelligence repose sur :
     *   le modèle choisi
     *   la construction des prompts
@@ -424,8 +422,7 @@ L’application permet :
 ## ⚠️ Contraintes
 
 *   ⏱️ Durée : **1 semaine (MVP)**
-*   💻 Choix de l’API non défini
-*   💰 Coût lié à l’utilisation de l’API
+*   💻 Choix de l’API limité
 *   🌐 Dépendance à Internet
 *   🔐 Authentification simple (niveau basique)
 
@@ -597,7 +594,7 @@ L’application permet :
 
 ## 🔧 Technologies
 
-*   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Un modéle de OpenRouter
+*   Gemini
 
 ## ✅ Rôle
 
@@ -678,7 +675,7 @@ L’application permet :
 | Frontend        | HTML, CSS, JavaScript |
 | Design          | Figma                 |
 | Backend         | Node.js (JavaScript)  |
-| API IA          | OpenAI / DeepL        |
+| API IA          | Gemini       |
 | Base de données | Firebase Firestore    |
 | Sécurité        | .env                  |
 | Versioning      | GitHub                |
