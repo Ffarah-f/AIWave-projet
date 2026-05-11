@@ -484,50 +484,172 @@ L’application permet :
 
 👉 **Connexion → Traduction → Résultat → Historique**
 
-***
+--------------------------------------------------------------------------------------------------------------------------------------------
 
-# ⚙️ 🔄 Workflow (fonctionnement du système)
+# 🏗️ Architecture du projet
 
-## 🔹 1. Côté utilisateur (Frontend)
+## 🔷 Vision globale
 
-*   Saisie du texte
-*   Choix langues + ton
-*   Envoi de la demande
+👉 Architecture simple en 3 parties :
 
-***
+**Frontend → Backend → API IA + Base de données**
 
-## 🔹 2. Côté serveur (Backend)
-
-*   Vérification utilisateur (auth + abonnement)
-*   Construction du **prompt** :
-    *   texte
-    *   langues
-    *   ton
-*   Envoi vers l’API IA
+    Utilisateur
+       ↓
+    Frontend (HTML, CSS, JS)
+       ↓
+    Backend (Node.js)
+       ↓        ↓
+    API IA     Firestore DB
+    (OpenAI…)   (historique + users)
 
 ***
 
-## 🔹 3. IA (API externe)
+# 💻 1. Frontend
 
-*   Analyse du texte
-*   Génération d’une traduction contextualisée
+## 🔧 Technologies
+
+*   Figma (maquettes)
+*   HTML
+*   CSS
+*   JavaScript
+
+## ✅ Rôle
+
+*   Interface utilisateur
+*   Interaction avec l’utilisateur
+*   Envoi des requêtes au backend
+*   Affichage des traductions
+
+## 💡 Explication des choix
+
+*   **HTML/CSS/JS** :
+    *   Simple et rapide pour un MVP
+    *   Aucune complexité inutile
+*   **Figma** :
+    *   Permet de concevoir une UI claire avant dev
+*   ✅ Parfait pour une V1 en 1 semaine
 
 ***
 
-## 🔹 4. Retour et affichage
+# ⚙️ 2. Backend
 
-*   Réception de la traduction
-*   Affichage côté utilisateur
+## 🔧 Technologies
+
+*   Node.js
+*   JavaScript
+*   Fichier `.env`
+
+## ✅ Rôle
+
+*   Gérer les requêtes du frontend
+*   Gérer l’authentification (login/signup)
+*   Gérer l’abonnement
+*   Construire le **prompt IA** (avec le ton)
+*   Appeler l’API de traduction
+*   Sauvegarder les données
+
+## 💡 Explication des choix
+
+*   **Node.js** :
+    *   Rapide à mettre en place
+    *   Même langage que frontend (JS)
+    *   Idéal pour projets courts (MVP)
+*   **.env** :
+    *   Stocker les clés API de façon sécurisée
+    *   Éviter de les exposer sur GitHub
 
 ***
 
-## 🔹 5. Sauvegarde
+# 🧠 3. API IA (externe)
 
-*   Enregistrement dans la base de données :
-    *   texte source
-    *   traduction
-    *   ton
-    *   langues
-    *   date
+## 🔧 Technologies
+
+*   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Un modéle de OpenRouter
+
+## ✅ Rôle
+
+*   Générer la traduction
+*   Prendre en compte le contexte (ton)
+
+## 💡 Explication des choix
+
+*   Pas besoin de créer une IA
+*   Gain de temps énorme
+*   Qualité déjà optimisée
+
+
+***
+
+# 🗄️ 4. Base de données
+
+## 🔧 Technologie
+
+*   Firebase Firestore
+
+## ✅ Rôle
+
+*   Stocker :
+    *   utilisateurs
+    *   traductions
+    *   historique
+
+## 💡 Explication des choix
+
+*   **Firestore** :
+    *   Simple à utiliser
+    *   Pas besoin de gérer un serveur SQL
+    *   Temps réel
+    *   Parfait pour MVP
+
+***
+
+# ☁️ 5. Gestion du projet
+
+## 🔧 Technologie
+
+*   GitHub
+
+## ✅ Rôle
+
+*   Stockage du code
+*   Versioning
+*   Collaboration
+
+## 💡 Explication des choix
+
+*   Standard du développement
+*   Simple et efficace
+
+***
+
+# 🔄 Workflow technique
+
+1.  L’utilisateur saisit un texte (frontend)
+2.  Le frontend envoie la requête au backend
+3.  Le backend :
+    *   vérifie l’utilisateur
+    *   construit le prompt (avec ton)
+    *   appelle l’API IA
+4.  L’API renvoie la traduction
+5.  Le backend :
+    *   enregistre dans Firestore
+    *   renvoie la réponse
+6.  Le frontend affiche le résultat
+
+***
+
+# ✅ Résumé des technologies
+
+| Partie          | Technologie           |
+| --------------- | --------------------- |
+| Frontend        | HTML, CSS, JavaScript |
+| Design          | Figma                 |
+| Backend         | Node.js (JavaScript)  |
+| API IA          | OpenAI / DeepL        |
+| Base de données | Firebase Firestore    |
+| Sécurité        | .env                  |
+| Versioning      | GitHub                |
 
 --------------------------------------------------------------------------------------------------------------------------------------------
+
