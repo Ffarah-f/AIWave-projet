@@ -20,6 +20,30 @@ Il peut ensuite :
 *   modifier manuellement la traduction
 *   sauvegarder automatiquement ses traductions dans un historique personnel
 
+# Avant de commencer l'explication du projet 
+
+## 🚀 Installation
+
+1. Cloner le dépôt :
+   ```bash
+   git clone https://github.com/username/AIWave-projet.git
+   cd AIWave-projet
+
+2. Installer les dépendances :
+    ```bash
+    npm install
+
+3.  Dans un fichier .env , dans le dossier du projet cloner, ajouter la clé API après "="
+    ```code
+    OPENAI_API_KEY=ta_cle_api
+
+4. Lancer l'application:
+    ```bash
+    npm start
+
+---
+
+
 # Raport V1
 
 Utilisation de copilot 365 pour les prompts
