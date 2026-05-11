@@ -43,7 +43,6 @@ Il peut ensuite :
 
 ---
 
-
 # Raport V1
 
 Utilisation de copilot 365 pour les prompts
