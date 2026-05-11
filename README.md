@@ -297,7 +297,7 @@ Le projet consiste à développer une application web permettant :
 *   La **saisie de texte** dans une interface simple
 *   La **sélection de la langue source et cible** 
 *   La **traduction via un modèle d’IA** (appel API type Gemini)
-*   La **prise en compte du contexte via des instructions envoyées au modèle** (ex : ton formel/informel, contexte simple)
+*   La **prise en compte du contexte via des instructions envoyées au modèle** 
 *   L’**affichage rapide de la traduction**
 *   La **modification manuelle du texte traduit**
 *   Une **interface moderne, claire et intuitive**
@@ -364,9 +364,7 @@ L’application permet :
 *   La **saisie de texte**
 *   La **sélection de la langue source et cible**
 *   La **traduction via une API d’intelligence artificielle externe**
-*   La **personnalisation du ton** :
-    *   formel
-    *   informel
+*   La **personnalisation du contexte** 
 
 👉 Cette personnalisation est une **fonctionnalité clé de la V1**
 
