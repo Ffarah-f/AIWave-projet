@@ -148,7 +148,7 @@ Formats souhaités : PDF, Word, texte simple
 
 ***
 
-# 💻 Expérience utilisateur
+### 💻 Expérience utilisateur
 
 **Compte obligatoire ?**  
 → Oui
@@ -161,7 +161,7 @@ Formats souhaités : PDF, Word, texte simple
 
 ***
 
-# 🧠 Intelligence et performance
+### 🧠 Intelligence et performance
 
 **Apprentissage des corrections ?**  
 → Pas pour le MVP, mais intéressant plus tard
@@ -171,7 +171,7 @@ Formats souhaités : PDF, Word, texte simple
 
 ***
 
-# 🧱 Contraintes techniques
+### 🧱 Contraintes techniques
 
 **Préférences techniques ?**  
 → Aucune
@@ -185,7 +185,7 @@ Formats souhaités : PDF, Word, texte simple
 
 ***
 
-# 🚀 Périmètre et priorités
+### 🚀 Périmètre et priorités
 
 **Fonctionnalités MVP ?**  
 →
@@ -205,7 +205,7 @@ Formats souhaités : PDF, Word, texte simple
 **Contraintes délai/budget ?**  
 → Non précisées pour le moment
 
-### Brief client amélioré
+## Brief client amélioré
 
 Nous souhaitons créer une application web de traduction intelligente capable de produire des traductions plus naturelles et adaptées au contexte que les outils classiques.
 
@@ -256,9 +256,9 @@ L’objectif est de valider :
 *   le modèle d’abonnement
 
 
-### Périmètre et Hors-Périmètre
+## Périmètre et Hors-Périmètre
 
-# ✅ Périmètre du projet 
+### ✅ Périmètre du projet 
 
 Le projet consiste à développer une application web permettant :
 
@@ -281,7 +281,7 @@ Le projet consiste à développer une application web permettant :
 
 ***
 
-# ❌ Hors périmètre du projet (simplification pour étudiants)
+### ❌ Hors périmètre du projet (simplification pour étudiants)
 
 Pour garantir la faisabilité, les éléments suivants sont exclus :
 
@@ -296,7 +296,7 @@ Pour garantir la faisabilité, les éléments suivants sont exclus :
 *   Intégrations tierces
 *   Optimisation haute performance ou gros volumes
 
-### Evaluations prévues
+## Evaluations prévues
 
 Plusieurs fonctionnalités pourront être ajoutées dans des versions ultérieures afin d’enrichir l’application :
 
@@ -425,7 +425,7 @@ L’application permet :
 
 ***
 
-# ✅ Conclusion
+## ✅ Conclusion
 
 👉 Une application web de traduction intelligente  
 👉 Avec personnalisation du ton, comptes utilisateurs, historique et abonnement  
