@@ -20,9 +20,9 @@ Il peut ensuite :
 *   modifier manuellement la traduction
 *   sauvegarder automatiquement ses traductions dans un historique personnel
 
-# Report V1
+# Raport V1
 
-## Utilisation de copilot 365 pour les prompts
+Utilisation de copilot 365 pour les prompts
 
 ### Brief Client 
 
