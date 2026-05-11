@@ -12,7 +12,7 @@ L’utilisateur peut :
 
 *   saisir un texte
 *   choisir une langue source et une langue cible
-*   indiquer un ton (formel ou informel)
+*   indiquer un contexte
 *   obtenir une traduction rapide et contextualisée
 
 Il peut ensuite :
@@ -132,7 +132,7 @@ Ces questions permettront de lever les ambiguïtés du brief initial et de défi
 → Adapter la traduction selon :
 
 *   le sens global du texte
-*   le ton (formel/informel)
+*   le ton
 *   le contexte d’utilisation
 
 ***
@@ -160,10 +160,7 @@ Ces questions permettront de lever les ambiguïtés du brief initial et de défi
 Formats souhaités : PDF, Word, texte simple
 
 **Personnalisation ?**  
-→ Oui, idéalement :
-
-*   ton (formel/informel)
-*   domaine (marketing, technique…)
+→ Oui, idéalement qux utilisateurs de choisir.
 
 **Correction par l’utilisateur ?**  
 → Oui, possibilité de modifier la traduction
@@ -248,10 +245,10 @@ Les utilisateurs devront pouvoir :
 
 *   saisir un texte
 *   choisir une langue source et une langue cible 
-*   choisir un ton de traduction (formel ou informel)
+*   choisir un contexte de traduction
 *   obtenir une traduction rapide générée via une API d’intelligence artificielle
 
-👉 La personnalisation du ton est une fonctionnalité clé de la V1 et doit améliorer la qualité et la pertinence des traductions.
+👉 La personnalisation du contexte est une fonctionnalité clé de la V1 et doit améliorer la qualité et la pertinence des traductions.
 L’utilisateur pourra modifier manuellement la traduction pour l’adapter à ses besoins.
 
 L’application inclura :
@@ -283,7 +280,7 @@ Ne sont pas inclus dans cette version :
 
 L’objectif est de valider :
 
-*   la pertinence de la traduction contextualisée via le ton
+*   la pertinence de la traduction contextualisée via contexte
 *   l’usage réel de l’application
 *   le modèle d’abonnement
 
