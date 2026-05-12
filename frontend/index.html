@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinguaSense | Traducteur IA Multilingue</title>
+    <meta name="description"
+        content="LinguaSense est un traducteur IA rapide et intelligent permettant de traduire facilement vos textes dans plusieurs langues.">
+    <meta name="keywords"
+        content="traducteur IA, traduction intelligente, traduction multilingue, traduction français anglais">
+    <meta name="author" content="LinguaSense">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.linguasense.com/">
+    <link rel="alternate" hreflang="fr" href="https://www.linguasense.com/">
+    <link rel="alternate" hreflang="en" href="https://www.linguasense.com/en/">
+    <meta property="og:title" content="LinguaSense | Traducteur IA">
+    <meta property="og:description" content="Traducteur IA multilingue rapide et intelligent.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.linguasense.com/">
+    <meta property="og:image" content="https://www.linguasense.com/assets/Logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <a href="index.html" class="logo-container" aria-label="Accueil LinguaSense">
+                <img src="assets/Logo.png" alt="Logo LinguaSense" class="logo" width="120" height="120">
+                <span class="brand-name">LINGUASENSE</span>
+            </a>
+            <nav class="nav-links" aria-label="Navigation principale">
+                <a href="history.html" class="btn-nav" title="Historique des traductions">Historique</a>
+                <a href="upgrade.html" class="btn-nav" title="Version premium">Améliorer</a>
+                <div class="user-icon">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" alt="Profil utilisateur"
+                        width="40" height="40" loading="lazy">
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main class="translator-container">
+        <h1>Traducteur IA Multilingue</h1>
+        <section class="translation-box">
+            <div class="top-row">
+                <div class="lang-selectors">
+                    <label for="source-lang" class="sr-only">Langue source</label>
+                    <select id="source-lang" name="source-lang" class="select-box">
+                        <option value="auto">Langue d'origine</option>
+                        <option value="fr">Français</option>
+                        <option value="en">Anglais</option>
+                        <option value="es">Espagnol</option>
+                    </select>
+                    <label for="target-lang" class="sr-only">Langue cible</label>
+                    <select id="target-lang" name="target-lang" class="select-box">
+                        <option value="">Langue cible</option>
+                        <option value="en">Anglais</option>
+                        <option value="es">Espagnol</option>
+                        <option value="fr">Français</option>
+                    </select>
+                </div>
+                <label for="context" class="sr-only">Contexte</label>
+                <textarea id="context" class="input-context" placeholder="Contexte (Optionnel)"
+                    aria-label="Contexte de traduction"></textarea>
+            </div>
+            <div class="text-areas">
+                <label for="text-input" class="sr-only">Texte à traduire</label>
+                <textarea id="text-input" class="text-input" placeholder="Veuillez saisir votre texte..."
+                    aria-label="Texte à traduire"></textarea>
+                <div class="text-output" aria-live="polite">
+                    <p class="placeholder-text">Résultat...</p>
+                </div>
+            </div>
+        </section>
+        <button class="btn-translate" type="button" aria-label="Traduire">Traduire</button>
+    </main>
+</body>
+
+</html>
