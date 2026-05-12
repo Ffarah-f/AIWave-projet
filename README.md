@@ -512,6 +512,60 @@ L’application permet :
 
 # 🏗️ Architecture du projet
 
+***
+
+## 📁 🏗️ Structure globale du projet !!!!!!!!!!!!!!!!!!!!!!!!
+
+    translation-app/
+    │
+    ├── frontend/
+    │   ├── index.html
+    │   ├── login.html
+    │   ├── register.html
+    │   ├── history.html
+    │   ├── upgrade.html
+    │   │
+    │   ├── css/
+    │   │   └── style.css
+    │   │
+    │   ├── js/
+    │   │   ├── app.js
+    │   │   ├── auth.js
+    │   │   ├── translate.js
+    │   │   ├── history.js
+    │   │   └── api.js
+    │   │
+    │   └── assets/
+    │       └── Logo.png
+    │
+    ├── backend/
+    │   ├── server.js
+    │   ├── routes/
+    │   │   └── translateRoutes.js
+    │   │
+    │   ├── controllers/
+    │   │   └── translateController.js
+    │   │
+    │   ├── services/
+    │   │   └── aiService.js
+    │   │
+    │   ├── config/
+    │   │   └── firebase.js
+    │   │
+    │   └── middleware/
+    │       └── authMiddleware.js
+    │
+    ├──packagejson/
+    │
+    │
+    ├──.env
+    ├── .gitignore
+    ├── README.md
+    └── package.json
+
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*** 
+
 ## 🔷 Vision globale
 
 👉 Architecture simple en 3 parties :
