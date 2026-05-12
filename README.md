@@ -20,31 +20,81 @@ Il peut ensuite :
 *   modifier manuellement la traduction
 *   sauvegarder automatiquement ses traductions dans un historique personnel
 
-# Avant de commencer l'explication du projet 
+## 🚀 Installation et Configuration
 
-## 🚀 Installation
+### Prérequis
+- Node.js (version 16 ou supérieure)
+- Un compte Google AI Studio pour la clé API Gemini
+- Un projet Firebase configuré
 
-1. Cloner le dépôt :
+### Étapes d'installation
+
+1. **Cloner le dépôt :**
    ```bash
    git clone https://github.com/username/AIWave-projet.git
    cd AIWave-projet
+   ```
 
-2. Installer les dépendances :
-    ```bash
-    npm install
+2. **Installer les dépendances du backend :**
+   ```bash
+   cd backend
+   npm install
+   ```
 
-3.  Dans un fichier .env , dans le dossier du projet cloner, ajouter la clé API après "="
-    ```code
-    OPENAI_API_KEY=ta_cle_api
+3. **Configuration des API :**
+   
+   a. **Clé API Gemini :**
+   - Rendez-vous sur [Google AI Studio](https://aistudio.google.com/app/apikey)
+   - Créez une nouvelle clé API
+   - Copiez la clé
+   
+   b. **Configuration Firebase :**
+   - Les paramètres Firebase sont déjà configurés dans le code
+   - Le fichier de clé de service est présent dans `backend/linguasense-726ba-firebase-adminsdk-fbsvc-d9d809130d.json`
+   
+   c. **Fichier .env :**
+   Dans `backend/.env`, remplacez `noapikey` par votre vraie clé Gemini :
+   ```
+   GEMINI_API_KEY=votre_vraie_cle_api_gemini
+   ```
+   Les autres variables Firebase sont déjà configurées.
 
-4. Lancer l'application:
-    ```bash
-    npm start
+4. **Lancer l'application :**
+   ```bash
+   # Depuis le dossier backend
+   npm start
+   ```
+   
+   Le serveur démarrera sur `http://localhost:3000`
+
+5. **Accéder à l'application :**
+   - Ouvrez `http://localhost:3000` dans votre navigateur
+   - Le backend sert désormais le frontend et l'API depuis le même port
+
+### Structure du projet
+```
+AIWave-projet/
+├── backend/           # Serveur Express.js
+│   ├── controllers/   # Logique métier
+│   ├── middleware/    # Authentification
+│   ├── routes/        # Routes API
+│   ├── services/      # Services externes (AI)
+│   ├── node_modules/  # node_modules
+│   └── server.js      # Point d'entrée
+├── frontend/          # Interface utilisateur
+│   ├── js/           # Scripts JavaScript
+│   ├── css/          # Styles
+│   └── *.html        # Pages HTML
+└── README.md
+```
+
+### API Endpoints
+- `POST /api/translate` - Traduction de texte (authentification requise)
+- `POST /api/chat` - Chat avec l'IA (authentification requise)
+- `GET /test` - Test du serveur
 
 ---
 
-## 🤝 Contribution
-```markdown
 ## 🤝 Contribution
 
 Ce projet est réalisé dans le cadre d’un travail étudiant.  
@@ -511,60 +561,6 @@ L’application permet :
 --------------------------------------------------------------------------------------------------------------------------------------------
 
 # 🏗️ Architecture du projet
-
-***
-
-## 📁 🏗️ Structure globale du projet !!!!!!!!!!!!!!!!!!!!!!!!
-
-    translation-app/
-    │
-    ├── frontend/
-    │   ├── index.html
-    │   ├── login.html
-    │   ├── register.html
-    │   ├── history.html
-    │   ├── upgrade.html
-    │   │
-    │   ├── css/
-    │   │   └── style.css
-    │   │
-    │   ├── js/
-    │   │   ├── app.js
-    │   │   ├── auth.js
-    │   │   ├── translate.js
-    │   │   ├── history.js
-    │   │   └── api.js
-    │   │
-    │   └── assets/
-    │       └── Logo.png
-    │
-    ├── backend/
-    │   ├── server.js
-    │   ├── routes/
-    │   │   └── translateRoutes.js
-    │   │
-    │   ├── controllers/
-    │   │   └── translateController.js
-    │   │
-    │   ├── services/
-    │   │   └── aiService.js
-    │   │
-    │   ├── config/
-    │   │   └── firebase.js
-    │   │
-    │   └── middleware/
-    │       └── authMiddleware.js
-    │
-    ├──packagejson/
-    │
-    │
-    ├──.env
-    ├── .gitignore
-    ├── README.md
-    └── package.json
-
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-*** 
 
 ## 🔷 Vision globale
 

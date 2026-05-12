@@ -1,1 +1,18 @@
-.env
+# Environment variables (at any depth)
+**/.env
+**/.env.*
+
+# Node
+node_modules/
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+serviceAccountKey.json
+backend/linguasense-726ba-firebase-adminsdk-fbsvc-d9d809130d.json

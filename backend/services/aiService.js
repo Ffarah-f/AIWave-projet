@@ -1,0 +1,92 @@
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+class AIService {
+    constructor() {
+        const apiKey = process.env.GEMINI_API_KEY;
+        if (!apiKey) {
+            throw new Error('GEMINI_API_KEY manquante dans le fichier .env');
+        }
+
+        // Use v1beta — required for Gemini 2.x models
+        this.genAI = new GoogleGenerativeAI(apiKey, { apiVersion: 'v1beta' });
+
+        this.modelCandidates = [
+            process.env.GEMINI_MODEL,
+            'gemini-2.0-flash',
+            'gemini-2.0-flash-lite',
+            'gemini-1.5-flash',
+            'gemini-1.5-pro',
+        ].filter(Boolean);
+
+        this.currentModelIndex = 0;
+        this.modelName = this.modelCandidates[this.currentModelIndex];
+        // Fixed: getGenerativeModel only takes one argument (model config)
+        this.model = this.genAI.getGenerativeModel({ model: this.modelName });
+        console.log(` AI Service initialized with model: ${this.modelName}`);
+    }
+
+    _isModelError(error) {
+        const message = error?.message?.toLowerCase() || '';
+        return (
+            message.includes('404') ||
+            message.includes('not found') ||
+            (message.includes('model') && message.includes('not supported'))
+        );
+    }
+
+    _switchModel() {
+        if (this.currentModelIndex + 1 >= this.modelCandidates.length) {
+            return false;
+        }
+        this.currentModelIndex += 1;
+        this.modelName = this.modelCandidates[this.currentModelIndex];
+        // Fixed: same here — no second argument
+        this.model = this.genAI.getGenerativeModel({ model: this.modelName });
+        console.log(` Changement de modèle Gemini vers: ${this.modelName}`);
+        return true;
+    }
+
+    async _runPrompt(prompt) {
+        let lastError = null;
+
+        while (true) {
+            try {
+                console.log(`📡 Appel Gemini avec modèle ${this.modelName}`);
+                const result = await this.model.generateContent(prompt);
+                const response = await result.response;
+                return response.text();
+            } catch (error) {
+                console.error(`❌ Erreur Gemini (${this.modelName}):`, error.message);
+                lastError = error;
+                if (this._isModelError(error) && this._switchModel()) {
+                    continue;
+                }
+                break;
+            }
+        }
+
+        throw lastError;
+    }
+
+    async translateText(text, language) {
+        try {
+            const prompt = `Tu es un traducteur expert. Traduis ce texte en ${language} : ${text}`;
+            return await this._runPrompt(prompt);
+        } catch (error) {
+            console.error('Erreur lors de la traduction:', error.message);
+            return `[DEMO] Traduction en ${language}: "${text}" - Clé Gemini ou modèle non configuré correctement`;
+        }
+    }
+
+    async chatWithAI(message) {
+        try {
+            const prompt = `Tu es l'assistant intelligent du projet LinguaSense. Réponds à ceci : ${message}`;
+            return await this._runPrompt(prompt);
+        } catch (error) {
+            console.error('Erreur lors du chat:', error.message);
+            return ` Structure MVC fonctionnelle! Message reçu: "${message}" - Cependant, la clé API Gemini n'a pas accès aux modèles configurés.`;
+        }
+    }
+}
+
+module.exports = new AIService();

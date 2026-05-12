@@ -35,38 +35,19 @@
     <main id="historyPage" class="history-container">
         <h1 id="historyTitle">Historique</h1>
 
+        <!-- Items are injected dynamically by history.js -->
         <section id="historyList" class="history-list">
-            <div class="history-item">
-                <div class="history-header">
-                    <div class="lang-display">Langue d'origine → Langue cible</div>
-                </div>
-                <div class="history-body">
-                    <p class="translated-text">"Texte initial" → "Texte traduit"</p>
-                </div>
-            </div>
-
-            <div class="history-item">
-                <div class="history-header">
-                    <div class="lang-display">Langue d'origine → Langue cible</div>
-                </div>
-                <div class="history-body">
-                    <p class="translated-text">"Texte initial" → "Texte traduit"</p>
-                </div>
-            </div>
-
-            <div class="history-item">
-                <div class="history-header">
-                    <div class="lang-display">Langue d'origine → Langue cible</div>
-                </div>
-                <div class="history-body">
-                    <p class="translated-text">"Texte initial" → "Texte traduit"</p>
-                </div>
-            </div>
+            <p>Chargement...</p>
         </section>
     </main>
+
     <footer class="footer">
-        <p>&copy; 2026 LinguaSense. Tous droits réservés.</p>   
+        <p>&copy; 2026 LinguaSense. Tous droits réservés.</p>
     </footer>
+
+    <!-- Firebase: must be type="module" -->
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/history.js"></script>
 </body>
 
 </html>
