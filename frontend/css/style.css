@@ -188,6 +188,160 @@ a[href="upgrade.html"].btn-nav:hover {
     text-decoration: underline;
 }
 
+.login-link {
+    color: var(--text-muted);
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+.login-link a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* Upgrade Page Styles */
+.upgrade-page {
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.upgrade-hero {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 40px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.eyebrow {
+    display: inline-block;
+    color: var(--primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+}
+
+.upgrade-hero h1 {
+    font-size: 2.6rem;
+    margin-bottom: 16px;
+}
+
+.subtitle {
+    max-width: 680px;
+    margin: 0 auto;
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.plan-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.plan-card-featured {
+    border-color: var(--primary);
+    transform: scale(1.02);
+}
+
+.plan-badge,
+.plan-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background-color: #eff6ff;
+    color: var(--primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    max-width: fit-content;
+}
+
+.plan-card-featured .plan-badge {
+    background-color: var(--primary);
+    color: white;
+}
+
+.plan-card h2 {
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.plan-price {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.plan-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 12px;
+    color: var(--text-muted);
+}
+
+.plan-card li::before {
+    content: '✓';
+    color: var(--primary);
+    margin-right: 10px;
+}
+
+.btn-plan {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 22px;
+    border-radius: var(--radius);
+    background-color: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.btn-plan:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btn-plan-primary {
+    background-color: var(--primary);
+    color: white;
+}
+
+.upgrade-note {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    padding: 0 10px;
+}
+
 /* Footer Styles */
 footer {
     text-align: center;
