@@ -244,9 +244,11 @@ a[href="upgrade.html"].btn-nav:hover {
 
 .plans-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 24px;
-    margin-bottom: 40px;
+    margin: 0 auto 40px;
+    max-width: 900px;
+    justify-content: center;
 }
 
 .plan-card {

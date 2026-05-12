@@ -32,11 +32,11 @@
                     <img src="assets/Logo.png" alt="Logo LinguaSense" class="logo" width="120" height="120">
                     <span class="brand-name">LINGUASENSE</span>
                 </a>
-                <nav class="nav-links" aria-label="Navigation principale">
-                    <a href="history.html" class="btn-nav" title="Historique des traductions">Historique</a>
-                    <a href="upgrade.html" class="btn-nav active" title="Version premium">Améliorer</a>
+                <nav id="mainNav" class="nav-links" aria-label="Navigation principale">
+                    <a id="navHistory" href="history.html" class="btn-nav" title="Historique des traductions">Historique</a>
+                    <a id="navUpgrade" href="upgrade.html" class="btn-nav active" title="Version premium">Améliorer</a>
                     <div class="user-icon">
-                        <a href="login.html" title="Se connecter">
+                        <a id="navLogin" href="login.html" title="Se connecter">
                             <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" alt="Profil utilisateur"
                                 width="40" height="40" loading="lazy">
                         </a>
@@ -44,57 +44,44 @@
                 </nav>
             </div>
         </header>
-        <main>
-            <div class="upgrade-page">
-                <section class="upgrade-hero">
+        <main id="upgradeMain">
+            <div id="upgradePage" class="upgrade-page">
+                <section id="upgradeHero" class="upgrade-hero">
                     <span class="eyebrow">Version Premium</span>
-                    <h1>Choisissez le plan LinguaSense qui vous convient</h1>
-                    <p class="subtitle">Profitez de traductions illimitées, de fonctionnalités avancées et d'un support prioritaire pour aller plus loin.</p>
+                    <h1 id="upgradeTitle">Choisissez le plan LinguaSense adapté à votre usage</h1>
+                    <p id="upgradeSubtitle" class="subtitle">Les deux plans donnent accès à l'historique et à l'enregistrement de vos traductions. La différence se joue sur le nombre de traductions disponibles chaque mois.</p>
                 </section>
 
-                <div class="plans-grid">
-                    <article class="plan-card">
-                        <span class="plan-label">Idéal pour commencer</span>
+                <div id="plansGrid" class="plans-grid">
+                    <article id="planEssential" class="plan-card">
+                        <span class="plan-label">Bon pour un usage régulier</span>
                         <h2>Essentiel</h2>
-                        <p class="plan-price">0€ / mois</p>
+                        <p id="priceEssential" class="plan-price">Gratuit</p>
                         <ul>
-                            <li>50 traductions par mois</li>
-                            <li>Accès standard au traducteur</li>
-                            <li>Captures de contexte de base</li>
+                            <li>100 traductions par mois</li>
+                            <li>Accès complet à l'historique</li>
+                            <li>Traduction de qualité standard</li>
                             <li>Support par e-mail</li>
                         </ul>
-                        <a href="#" class="btn-plan">Choisir Essentiel</a>
+                        <a id="btnEssential" href="#" class="btn-plan">Choisir Essentiel</a>
                     </article>
 
-                    <article class="plan-card plan-card-featured">
-                        <span class="plan-badge">Le plus populaire</span>
-                        <h2>Pro</h2>
-                        <p class="plan-price">9,99€ / mois</p>
+                    <article id="planPremium" class="plan-card plan-card-featured">
+                        <span class="plan-badge">Meilleur rapport qualité/prix</span>
+                        <h2>Premium</h2>
+                        <p id="pricePremium" class="plan-price">15.99€ / mois</p>
                         <ul>
                             <li>Traductions illimitées</li>
-                            <li>Historique et sauvegarde</li>
-                            <li>Qualité de traduction premium</li>
+                            <li>Accès complet à l'historique</li>
+                            <li>Traduction de qualité premium</li>
                             <li>Support prioritaire</li>
                         </ul>
-                        <a href="#" class="btn-plan btn-plan-primary">Choisir Pro</a>
-                    </article>
-
-                    <article class="plan-card">
-                        <span class="plan-label">Pour équipes et usages intensifs</span>
-                        <h2>Business</h2>
-                        <p class="plan-price">19,99€ / mois</p>
-                        <ul>
-                            <li>Tout le contenu Pro</li>
-                            <li>Collaborations multi-utilisateurs</li>
-                            <li>API d'intégration</li>
-                            <li>Rapports avancés</li>
-                        </ul>
-                        <a href="#" class="btn-plan">Choisir Business</a>
+                        <a id="btnPremium" href="#" class="btn-plan btn-plan-primary">Choisir Premium</a>
                     </article>
                 </div>
 
-                <div class="upgrade-note">
-                    <p>Pas encore décidé ? Commencez avec le plan Essentiel gratuitement, puis passez facilement au plan Pro ou Business quand vous êtes prêt.</p>
+                <div id="upgradeNote" class="upgrade-note">
+                    <p>Choisissez Essentiel si vous utilisez LinguaSense régulièrement, ou passez au plan Premium pour des traductions illimitées et un accès historique sans restriction.</p>
                 </div>
             </div>
         </main>

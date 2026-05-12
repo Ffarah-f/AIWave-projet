@@ -34,11 +34,11 @@
                 <img src="assets/Logo.png" alt="Logo LinguaSense" class="logo" width="120" height="120">
                 <span class="brand-name">LINGUASENSE</span>
             </a>
-            <nav class="nav-links" aria-label="Navigation principale">
-                <a href="history.html" class="btn-nav" title="Historique des traductions">Historique</a>
-                <a href="upgrade.html" class="btn-nav" title="Version premium">Améliorer</a>
+            <nav id="mainNav" class="nav-links" aria-label="Navigation principale">
+                <a id="navHistory" href="history.html" class="btn-nav" title="Historique des traductions">Historique</a>
+                <a id="navUpgrade" href="upgrade.html" class="btn-nav" title="Version premium">Améliorer</a>
                 <div class="user-icon">
-                    <a href="login.html" title="Se connecter">
+                    <a id="navLogin" href="login.html" title="Se connecter">
                     <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" alt="Profil utilisateur"
                         width="40" height="40" loading="lazy">
                     </a>
@@ -46,8 +46,8 @@
             </nav>
         </div>
     </header>
-    <main class="translator-container">
-        <h1>Traducteur IA Multilingue</h1>
+    <main id="translatorPage" class="translator-container">
+        <h1 id="translatorTitle">Traducteur IA Multilingue</h1>
         <section class="translation-box">
             <div class="top-row">
                 <div class="lang-selectors">
@@ -74,12 +74,12 @@
                 <label for="text-input" class="sr-only">Texte à traduire</label>
                 <textarea id="text-input" class="text-input" placeholder="Veuillez saisir votre texte..."
                     aria-label="Texte à traduire"></textarea>
-                <div class="text-output" aria-live="polite">
+                <div id="translationOutput" class="text-output" aria-live="polite">
                     <p class="placeholder-text">Résultat...</p>
                 </div>
             </div>
         </section>
-        <button class="btn-translate" type="button" aria-label="Traduire">Traduire</button>
+        <button id="translateBtn" class="btn-translate" type="button" aria-label="Traduire">Traduire</button>
     </main>
     <footer class="footer">
         <p>&copy; 2026 LinguaSense. Tous droits réservés.</p>   

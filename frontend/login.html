@@ -34,11 +34,11 @@
                     <img src="assets/Logo.png" alt="Logo LinguaSense" class="logo" width="120" height="120">
                     <span class="brand-name">LINGUASENSE</span>
                 </a>
-                <nav class="nav-links" aria-label="Navigation principale">
-                    <a href="register.html" class="btn-nav" title="S'inscrire">S'inscrire</a>
-                    <a href="upgrade.html" class="btn-nav" title="Version premium">Améliorer</a>
+                <nav id="mainNav" class="nav-links" aria-label="Navigation principale">
+                    <a id="navRegister" href="register.html" class="btn-nav" title="S'inscrire">S'inscrire</a>
+                    <a id="navUpgrade" href="upgrade.html" class="btn-nav" title="Version premium">Améliorer</a>
                     <div class="user-icon">
-                        <a href="login.html" title="Se connecter">
+                        <a id="navLogin" href="login.html" title="Se connecter">
                             <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" alt="Profil utilisateur"
                                 width="40" height="40" loading="lazy">
                         </a>
@@ -46,17 +46,17 @@
                 </nav>
             </div>
         </header>
-        <main>
+        <main id="loginPage">
             <div class="login-container">
-                <h1>Connexion à LinguaSense</h1>
-                <form action="/login" method="POST" class="login-form">
+                <h1 id="loginTitle">Connexion à LinguaSense</h1>
+                <form id="loginForm" action="/login" method="POST" class="login-form">
                     <label for="email">Adresse e-mail</label>
                     <input type="email" id="email" name="email" required placeholder="Entrez votre adresse e-mail">
                     <label for="password">Mot de passe</label>
                     <input type="password" id="password" name="password" required placeholder="Entrez votre mot de passe">
-                    <button type="submit" class="btn-login">Se connecter</button>
+                    <button id="loginSubmit" type="submit" class="btn-login">Se connecter</button>
                 </form>
-                <p class="register-link">Pas de compte ? <a href="register.html">S'inscrire</a></p>
+                <p id="registerLink" class="register-link">Pas de compte ? <a href="register.html">S'inscrire</a></p>
             </div>
         </main>
         <footer class="footer">
