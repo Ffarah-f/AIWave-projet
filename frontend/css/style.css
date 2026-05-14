@@ -696,3 +696,7 @@ h1 {
     color: var(--text-main);
     font-weight: 400;
 }
+
+.error-text {
+    color: #e53e3e;
+}
