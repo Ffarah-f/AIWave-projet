@@ -16,6 +16,7 @@ const translateBtn  = document.getElementById("translateBtn");
 const textInput     = document.getElementById("text-input");
 const targetLang    = document.getElementById("target-lang");
 const sourceLang    = document.getElementById("source-lang");
+const contextInput  = document.getElementById("context");
 const outputDiv     = document.getElementById("translationOutput");
 const counterDiv    = document.getElementById("translationCounter");
 const counterValue  = document.getElementById("counterValue");
@@ -113,6 +114,7 @@ translateBtn.addEventListener("click", async () => {
     const text     = textInput.value.trim();
     const language = targetLang.value;
     const source   = sourceLang.value;
+    const context  = contextInput.value.trim();
 
     if (!text) {
         outputDiv.innerHTML = "<p style='color:#e53e3e;'>Veuillez saisir un texte à traduire.</p>";
@@ -141,7 +143,7 @@ translateBtn.addEventListener("click", async () => {
                 "Content-Type":  "application/json",
                 "Authorization": `Bearer ${token}`   // ← sent to backend for verification
             },
-            body: JSON.stringify({ text, language })
+            body: JSON.stringify({ text, language, context })
         });
 
         if (response.status === 401) {
@@ -177,6 +179,7 @@ translateBtn.addEventListener("click", async () => {
             translatedText: translatedText,
             sourceLanguage: source,
             targetLanguage: language,
+            context:        context,
             timestamp:      serverTimestamp()
         });
 

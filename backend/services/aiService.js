@@ -89,14 +89,19 @@ class AIService {
         throw lastError;
     }
 
-    async translateText(text, language) {
+    async translateText(text, language, context = '') {
         try {
             const targetLanguage = this._normalizeLanguage(language);
+            const translationContext = String(context || '').trim();
+            const contextInstructions = translationContext
+                ? `Use this context to choose the most natural meaning, tone, register, and wording. Do not translate or repeat the context unless it is part of the text to translate.\n\nContext:\n${translationContext}\n\n`
+                : '';
             const prompt = `You are an expert translator.
 Translate the text below into ${targetLanguage}.
 Return only the translated text, with no explanation.
-If the context is ambiguous, use the most common/basic translation.
+If context is provided, follow it carefully. If no context is provided and the meaning is ambiguous, use the most common/basic translation.
 
+${contextInstructions}
 Text:
 ${text}`;
             return await this._runPrompt(prompt);

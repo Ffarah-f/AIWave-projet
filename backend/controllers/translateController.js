@@ -4,7 +4,7 @@ const admin = require('firebase-admin');
 class TranslateController {
     async translate(req, res) {
         try {
-            const { text, language } = req.body;
+            const { text, language, context } = req.body;
             const userId = req.user.uid;
 
             // Validation des données d'entrée
@@ -47,13 +47,14 @@ class TranslateController {
             }
 
             // Appel du service AI
-            const translatedText = await aiService.translateText(text, language);
+            const translatedText = await aiService.translateText(text, language, context);
 
             res.json({
                 success: true,
                 originalText: text,
                 translatedText: translatedText,
                 language: language,
+                context: context || '',
                 isSubscribed: isSubscribed,
                 translationCount: translationCount + 1,
                 remainingTranslations: remainingTranslations - 1
