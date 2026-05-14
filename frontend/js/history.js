@@ -11,7 +11,6 @@ import {
 
 const historyList = document.getElementById("historyList");
 
-// ─── Auth guard + load history ───────────────────────────────────────────────
 onAuthStateChanged(auth, async (user) => {
     if (!user) {
         window.location.href = "login.html";
@@ -20,9 +19,18 @@ onAuthStateChanged(auth, async (user) => {
     await loadHistory(user.uid);
 });
 
-// ─── Load and render translations from Firestore ─────────────────────────────
+function showListMessage(message, className = "") {
+    historyList.replaceChildren();
+    const paragraph = document.createElement("p");
+    if (className) {
+        paragraph.className = className;
+    }
+    paragraph.textContent = message;
+    historyList.appendChild(paragraph);
+}
+
 async function loadHistory(uid) {
-    historyList.innerHTML = "<p>Chargement...</p>";
+    showListMessage("Chargement...");
 
     try {
         const q = query(
@@ -33,35 +41,33 @@ async function loadHistory(uid) {
         const snapshot = await getDocs(q);
 
         if (snapshot.empty) {
-            historyList.innerHTML = "<p>Aucune traduction sauvegardée pour l'instant.</p>";
+            showListMessage("Aucune traduction sauvegardee pour l'instant.");
             return;
         }
 
-        historyList.innerHTML = "";
-
+        historyList.replaceChildren();
         snapshot.forEach((docSnap) => {
-            const data = docSnap.data();
-            const item = createHistoryItem(docSnap.id, data, uid);
+            const item = createHistoryItem(docSnap.id, docSnap.data(), uid);
             historyList.appendChild(item);
         });
-
     } catch (error) {
-        console.error("Erreur lors du chargement de l'historique :", error);
-        historyList.innerHTML = "<p style='color:#e53e3e;'>Impossible de charger l'historique.</p>";
+        console.error("Erreur lors du chargement de l'historique:", error);
+        showListMessage("Impossible de charger l'historique.", "error-text");
     }
 }
 
-// ─── Build a history item element ────────────────────────────────────────────
 function createHistoryItem(docId, data, uid) {
     const sourceLang = data.sourceLanguage || "?";
     const targetLang = data.targetLanguage || "?";
 
-    // Format the timestamp if it exists
     let dateStr = "";
     if (data.timestamp?.toDate) {
         dateStr = data.timestamp.toDate().toLocaleDateString("fr-FR", {
-            day: "2-digit", month: "2-digit", year: "numeric",
-            hour: "2-digit", minute: "2-digit"
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
         });
     }
 
@@ -69,40 +75,55 @@ function createHistoryItem(docId, data, uid) {
     item.className = "history-item";
     item.dataset.id = docId;
 
-    item.innerHTML = `
-        <div class="history-header">
-            <div class="lang-display">${sourceLang} → ${targetLang}</div>
-            <div class="history-meta">
-                <span class="history-date">${dateStr}</span>
-                <button class="btn-delete" data-id="${docId}" title="Supprimer">✕</button>
-            </div>
-        </div>
-        <div class="history-body">
-            <p class="translated-text">
-                "${data.originalText}" → "${data.translatedText}"
-            </p>
-        </div>
-    `;
+    const header = document.createElement("div");
+    header.className = "history-header";
 
-    // Delete button
-    item.querySelector(".btn-delete").addEventListener("click", async () => {
+    const langDisplay = document.createElement("div");
+    langDisplay.className = "lang-display";
+    langDisplay.textContent = `${sourceLang} -> ${targetLang}`;
+
+    const meta = document.createElement("div");
+    meta.className = "history-meta";
+
+    const date = document.createElement("span");
+    date.className = "history-date";
+    date.textContent = dateStr;
+
+    const button = document.createElement("button");
+    button.className = "btn-delete";
+    button.dataset.id = docId;
+    button.title = "Supprimer";
+    button.type = "button";
+    button.textContent = "x";
+    button.addEventListener("click", async () => {
         await deleteTranslation(uid, docId, item);
     });
+
+    meta.append(date, button);
+    header.append(langDisplay, meta);
+
+    const body = document.createElement("div");
+    body.className = "history-body";
+
+    const translatedText = document.createElement("p");
+    translatedText.className = "translated-text";
+    translatedText.textContent = `"${data.originalText || ""}" -> "${data.translatedText || ""}"`;
+
+    body.appendChild(translatedText);
+    item.append(header, body);
 
     return item;
 }
 
-// ─── Delete a translation ─────────────────────────────────────────────────────
 async function deleteTranslation(uid, docId, itemEl) {
     try {
         await deleteDoc(doc(db, "users", uid, "translations", docId));
         itemEl.remove();
 
-        // Show empty state if no items left
         if (historyList.children.length === 0) {
-            historyList.innerHTML = "<p>Aucune traduction sauvegardée pour l'instant.</p>";
+            showListMessage("Aucune traduction sauvegardee pour l'instant.");
         }
     } catch (error) {
-        console.error("Erreur lors de la suppression :", error);
+        console.error("Erreur lors de la suppression:", error);
     }
 }
