@@ -108,11 +108,24 @@ ${text}`;
 
     async chatWithAI(message) {
         try {
-            const prompt = `Tu es l'assistant intelligent du projet LinguaSense. Réponds à ceci : ${message}`;
+            const prompt = `You are LinguaSense's translation assistant.
+Your scope is strictly limited to translation-related help, including:
+- translating text
+- explaining words, expressions, idioms, grammar, tone, register, or cultural context
+- improving or comparing translations
+- helping choose a source/target language or wording style
+
+If the user's message is not related to translation, language, writing, grammar, or localization, politely refuse and briefly say you can only help with translation-related questions.
+
+Answer in the same language as the user's message. If the user asks for a specific response language, use that language.
+Keep the answer concise and useful.
+
+User message:
+${message}`;
             return await this._runPrompt(prompt);
         } catch (error) {
             console.error('Erreur lors du chat:', error.message);
-            return ` Structure MVC fonctionnelle! Message reçu: "${message}" - Cependant, la clé API Gemini n'a pas accès aux modèles configurés.`;
+            return `The translation assistant is currently unavailable. Please check the Gemini API key or model configuration.`;
         }
     }
 }
