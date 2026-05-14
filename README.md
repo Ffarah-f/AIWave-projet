@@ -4,42 +4,61 @@
 
 Le projet consiste à développer **LinguaSense**, une application web de traduction intelligente qui va au-delà des traducteurs classiques en proposant des traductions plus naturelles et adaptées au contexte.
 
-L'idée centrale est de créer un outil simple à utiliser, accessible à tous, mais suffisamment performant pour répondre à des besoins professionnels.
+L'idée centrale est de créer un outil simple à utiliser, accessible depuis un navigateur, mais suffisamment performant pour répondre à des besoins professionnels et grand public.
 
 🎯 Ce que fait l'application
 
 L'utilisateur peut :
 
-*   créer un compte ou se connecter
-*   saisir un texte
-*   choisir une langue source et une langue cible
-*   indiquer un contexte dans l'interface
-*   obtenir une traduction rapide via Gemini
-*   utiliser un assistant IA pour poser des questions liées à la traduction
+* créer un compte ou se connecter
+* saisir un texte
+* choisir une langue source et une langue cible
+* indiquer un contexte optionnel dans l'interface
+* obtenir une traduction rapide via Gemini
+* utiliser un assistant IA pour poser des questions liées à la traduction
 
 Il peut ensuite :
 
-*   reprendre ou corriger manuellement la traduction selon ses besoins
-*   sauvegarder automatiquement ses traductions dans un historique personnel
-*   consulter et supprimer des éléments de son historique
-*   accéder à une page d'amélioration/premium
+* reprendre ou corriger manuellement la traduction selon ses besoins
+* sauvegarder automatiquement ses traductions dans un historique personnel
+* consulter et supprimer des éléments de son historique
+* accéder à une page d'amélioration/premium
+
+## Changements appliqués
+
+Le README a été mis à jour pour refléter l'état actuel du projet :
+
+* le backend est une application **Node.js / Express.js** qui sert aussi le frontend statique
+* le frontend est construit avec **HTML, CSS et JavaScript modules**
+* l'authentification utilise **Firebase Authentication**
+* le backend vérifie les tokens avec **Firebase Admin SDK**
+* les traductions et l'assistant IA utilisent **Gemini** via `@google/generative-ai`
+* le champ `context` est maintenant envoyé au backend et utilisé dans le prompt Gemini
+* les traductions sont sauvegardées dans **Firestore**
+* les utilisateurs non abonnés sont limités à **15 traductions**
+* la page `upgrade.html` sert de page premium / amélioration
+* la configuration HTTPS présente dans `.env` n'active pas HTTPS directement, car `server.js` démarre actuellement un serveur HTTP sur le port `3000`
 
 ## 🚀 Installation et Configuration
 
 ### Prérequis
-- Node.js (version 16 ou supérieure)
-- Un compte Google AI Studio pour la clé API Gemini
+
+- Node.js 16 ou supérieur
+- Un compte Google AI Studio pour obtenir une clé API Gemini
 - Un projet Firebase configuré avec Authentication et Firestore
+- Un compte de service Firebase pour le backend
 
 ### Étapes d'installation
 
 1. **Cloner le dépôt :**
+
    ```bash
    git clone https://github.com/username/AIWave-projet.git
    cd AIWave-projet
    ```
 
 2. **Installer les dépendances du backend :**
+
    ```bash
    cd backend
    npm install
@@ -48,43 +67,56 @@ Il peut ensuite :
 3. **Configuration des API :**
 
    a. **Clé API Gemini :**
-   - Rendez-vous sur [Google AI Studio](https://aistudio.google.com/app/apikey)
+
+   - Rendez-vous sur Google AI Studio
    - Créez une nouvelle clé API
-   - Copiez la clé
+   - Copiez la clé dans le fichier `backend/.env`
 
    b. **Configuration Firebase :**
+
    - Le frontend utilise la configuration Firebase présente dans `frontend/js/firebase.js`
    - Le backend utilise Firebase Admin pour vérifier les tokens et accéder à Firestore
    - Les identifiants Admin doivent être placés dans le fichier `backend/.env`
 
-   c. **Fichier .env :**
+   c. **Fichier `.env` :**
+
    Dans `backend/.env`, ajoutez les variables nécessaires :
+
    ```env
    GEMINI_API_KEY=votre_vraie_cle_api_gemini
-   GEMINI_MODEL=gemini-2.0-flash
+   GEMINI_MODEL=gemini-2.5-flash-lite
 
    FIREBASE_PROJECT_ID=votre_project_id
    FIREBASE_CLIENT_EMAIL=votre_client_email
    FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
    ```
 
+   Remarque : `FIREBASE_PRIVATE_KEY` doit garder les retours à la ligne sous forme de `\n`.
+
 4. **Lancer l'application :**
+
    ```bash
-   # Depuis le dossier backend
+   cd backend
    npm start
    ```
 
-   Le serveur démarre sur `http://localhost:3000`
+   Le serveur démarre sur :
+
+   ```text
+   http://localhost:3000
+   ```
 
 5. **Accéder à l'application :**
+
    - Ouvrez `http://localhost:3000` dans votre navigateur
    - Le backend sert le frontend et l'API depuis le même port
 
 ### Structure du projet
-```
+
+```text
 AIWave-projet/
 ├── backend/                 # Serveur Express.js
-│   ├── controllers/         # Logique métier
+│   ├── controllers/         # Logique métier des routes
 │   ├── middleware/          # Vérification du token Firebase
 │   ├── routes/              # Routes API
 │   ├── services/            # Service Gemini AI
@@ -103,18 +135,39 @@ AIWave-projet/
 ```
 
 ### API Endpoints
-- `POST /api/translate` - Traduction de texte avec Gemini (authentification requise)
-- `POST /api/chat` - Assistant IA lié au projet (authentification requise)
+
+- `POST /api/translate` - Traduction de texte avec Gemini, authentification requise
+- `POST /api/chat` - Assistant IA lié à la traduction, authentification requise
 - `GET /test` - Test du serveur
+
+### Activer HTTPS sans changer le code
+
+Le serveur Express actuel écoute en HTTP sur `http://localhost:3000`. Pour utiliser HTTPS sans modifier le code, il faut placer une couche HTTPS devant Node.js.
+
+Options possibles :
+
+* **Caddy** : recommandé pour un domaine réel, car il gère automatiquement les certificats HTTPS.
+* **Nginx + Let's Encrypt** : solution classique en production.
+* **Plateforme d'hébergement** : Render, Railway, Fly.io, Azure App Service, Google Cloud Run, etc. Ces plateformes fournissent souvent HTTPS automatiquement.
+* **Tunnel temporaire** : `ngrok http 3000` ou Cloudflare Tunnel pour une démonstration locale.
+
+Exemple avec Caddy :
+
+```caddyfile
+linguasense.example.com {
+    reverse_proxy localhost:3000
+}
+```
+
+Important : changer uniquement les variables HTTPS dans `.env` ne suffit pas, car `backend/server.js` démarre actuellement un serveur HTTP directement sur le port `3000`.
 
 ---
 
 ## 🤝 Contribution
 
 Ce projet est réalisé dans le cadre d'un travail étudiant.  
-Les contributeurs sont uniquement les membres de l'équipe projet (camarades de classe).  
+Les contributeurs sont uniquement les membres de l'équipe projet.  
 Merci de ne pas proposer de contributions externes pour le moment.
-
 
 # Rapport V1
 
@@ -122,13 +175,11 @@ Utilisation de Copilot 365 pour les prompts.
 
 ### Brief Client
 
-Nous souhaitons créer une application web capable de traduire automatiquement des textes en prenant en compte leur contexte afin d'obtenir des résultats plus naturels et adaptés à l'usage réel. L'objectif est d'aller au-delà d'une simple traduction mot à mot, en proposant une solution plus "intelligente".
+Nous souhaitons créer une application web capable de traduire automatiquement des textes en prenant en compte leur contexte afin d'obtenir des résultats plus naturels et adaptés à l'usage réel. L'objectif est d'aller au-delà d'une simple traduction mot à mot, en proposant une solution plus intelligente.
 
-Les utilisateurs devront pouvoir saisir du texte, choisir une langue cible et obtenir une traduction rapidement. Il serait intéressant que l'outil puisse s'adapter à différents types de contenus, mais cela reste à préciser.
+Les utilisateurs devront pouvoir saisir du texte, choisir une langue cible et obtenir une traduction rapidement. L'application devra être simple d'utilisation et accessible depuis un navigateur, sans nécessité d'installation.
 
-L'application devra être simple d'utilisation et accessible depuis un navigateur, sans nécessité d'installation. Les langues prioritaires pour la V1 sont les langues déjà proposées dans l'interface.
-
-À terme, nous aimerions que l'outil puisse s'intégrer dans d'autres environnements ou proposer des fonctionnalités avancées, mais pour l'instant nous souhaitons surtout valider une première version fonctionnelle. Les choix techniques actuels sont HTML/CSS/JavaScript, Node.js, Firebase et Gemini.
+Les choix techniques actuels sont HTML, CSS, JavaScript, Node.js, Firebase et Gemini.
 
 ### Questions proposées par l'IA
 
@@ -136,98 +187,91 @@ Voici une liste de questions pertinentes à poser au client pour mieux comprendr
 
 **Objectifs et vision**
 
-*   Quel est l'objectif principal de l'application (usage professionnel, éducatif, personnel...) ?
-*   Quel problème précis souhaitez-vous résoudre par rapport aux traducteurs existants ?
-*   Qu'entendez-vous exactement par "traduction contextuelle" dans votre besoin ?
+* Quel est l'objectif principal de l'application ?
+* Quel problème précis souhaitez-vous résoudre par rapport aux traducteurs existants ?
+* Qu'entendez-vous exactement par traduction contextuelle ?
 
 **Cibles utilisateurs**
 
-*   Qui sont les utilisateurs principaux (étudiants, entreprises, traducteurs, grand public...) ?
-*   Quels sont leurs besoins spécifiques et leurs usages fréquents ?
-*   Avez-vous des personas ou des cas d'usage types ?
+* Qui sont les utilisateurs principaux ?
+* Quels sont leurs besoins spécifiques ?
+* Avez-vous des personas ou des cas d'usage types ?
 
 **Fonctionnalités**
 
-*   Quels types de contenus doivent être pris en charge (phrases courtes, documents, e-mails, etc.) ?
-*   Faut-il gérer l'import/export de fichiers ? Si oui, quels formats ?
-*   Souhaitez-vous une possibilité de personnalisation (ton, registre, domaine métier) ?
-*   L'utilisateur doit-il pouvoir corriger ou améliorer la traduction ?
+* Quels types de contenus doivent être pris en charge ?
+* Faut-il gérer l'import/export de fichiers ?
+* Souhaitez-vous une personnalisation du ton ou du contexte ?
+* L'utilisateur doit-il pouvoir corriger ou améliorer la traduction ?
 
 **Langues**
 
-*   Quelles langues doivent être disponibles au lancement ?
-*   Souhaitez-vous gérer des dialectes ou variantes régionales ?
+* Quelles langues doivent être disponibles au lancement ?
+* Souhaitez-vous gérer des dialectes ou variantes régionales ?
 
 **Expérience utilisateur**
 
-*   L'application nécessite-t-elle un compte utilisateur ou doit-elle être accessible librement ?
-*   Faut-il garder un historique des traductions ?
-*   Y a-t-il des attentes spécifiques en termes de design ou d'ergonomie ?
+* L'application nécessite-t-elle un compte utilisateur ?
+* Faut-il garder un historique des traductions ?
+* Y a-t-il des attentes spécifiques en design ou ergonomie ?
 
 **Intelligence et performance**
 
-*   Le système doit-il apprendre des corrections des utilisateurs ?
-*   Y a-t-il des exigences en termes de rapidité ou de volume de traitement ?
+* Le système doit-il apprendre des corrections des utilisateurs ?
+* Y a-t-il des exigences de rapidité ?
 
 **Contraintes techniques**
 
-*   Avez-vous des préférences technologiques (framework, langage, hébergement...) ?
-*   L'application doit-elle être évolutive (API, intégrations futures, mobile...) ?
+* Avez-vous des préférences technologiques ?
+* L'application doit-elle être évolutive ?
 
 **Périmètre et priorités**
 
-*   Quelles fonctionnalités sont indispensables pour une première version (MVP) ?
-*   Quelles sont celles qui peuvent être ajoutées plus tard ?
-*   Avez-vous des contraintes de délai ou de budget ?
-
-Ces questions permettent de lever les ambiguïtés du brief initial et de définir un cadre clair pour la suite du projet.
+* Quelles fonctionnalités sont indispensables pour une première version ?
+* Quelles fonctionnalités peuvent être ajoutées plus tard ?
 
 # Réponses client
 
 ### 🎯 Objectifs et vision
 
 **Quel est l'objectif principal de l'application ?**  
-→ Usage **professionnel et grand public**
+→ Usage professionnel et grand public.
 
 **Quel problème souhaitez-vous résoudre ?**  
-→ Les traducteurs actuels font des traductions trop littérales, pas assez naturelles.
+→ Les traducteurs actuels produisent parfois des traductions trop littérales et pas assez naturelles.
 
-**Que signifie "traduction contextuelle" ?**  
+**Que signifie traduction contextuelle ?**  
 → Adapter la traduction selon :
 
-*   le sens global du texte
-*   le ton
-*   le contexte d'utilisation
+* le sens global du texte
+* le ton
+* le contexte d'utilisation
 
 ***
 
 ### 👤 Cibles utilisateurs
 
 **Qui sont les utilisateurs principaux ?**  
-→ Professionnels (marketing, support...) + grand public
+→ Professionnels, étudiants et grand public.
 
 **Quels sont leurs besoins ?**  
-→ Traduire rapidement avec un résultat naturel et compréhensible
-
-**Avez-vous des personas ?**  
-→ Non, pas encore définis
+→ Traduire rapidement avec un résultat naturel et compréhensible.
 
 ***
 
 ### ⚙️ Fonctionnalités
 
 **Types de contenus ?**  
-→ Texte court, documents et e-mails
+→ Texte court, messages, documents courts et e-mails.
 
 **Import/export de fichiers ?**  
-→ Non pour la V1.  
-Formats souhaités plus tard : PDF, Word, texte simple.
+→ Non pour la V1.
 
 **Personnalisation ?**  
-→ Oui, idéalement permettre aux utilisateurs de choisir un contexte ou un ton.
+→ Oui, via un champ contexte dans l'interface.
 
 **Correction par l'utilisateur ?**  
-→ Oui, c'est un besoin prévu. Dans l'état actuel, l'utilisateur peut reprendre le résultat affiché, mais l'édition intégrée de la traduction n'est pas encore une fonctionnalité complète.
+→ Oui, l'utilisateur peut reprendre manuellement le résultat affiché.
 
 ***
 
@@ -247,7 +291,7 @@ Formats souhaités plus tard : PDF, Word, texte simple.
 → Oui.
 
 **Historique ?**  
-→ Oui, de préférence.
+→ Oui, les traductions sont enregistrées dans Firestore.
 
 **Attentes design ?**  
 → Interface simple, moderne et intuitive.
@@ -257,108 +301,80 @@ Formats souhaités plus tard : PDF, Word, texte simple.
 ### 🧠 Intelligence et performance
 
 **Apprentissage des corrections ?**  
-→ Pas pour le MVP, mais intéressant plus tard.
+→ Pas pour le MVP.
 
 **Exigences performance ?**  
-→ Traduction rapide, en quelques secondes si possible.
+→ Traduction rapide, idéalement en quelques secondes.
 
 ***
 
 ### 🧱 Contraintes techniques
 
 **Préférences techniques ?**  
-→ Aucune au départ. La version actuelle utilise HTML/CSS/JavaScript, Node.js, Firebase et Gemini.
+→ La version actuelle utilise HTML/CSS/JavaScript, Node.js, Firebase et Gemini.
 
 **Évolutivité ?**  
-→ Oui, possibilités futures :
-
-*   API
-*   intégrations
-*   version mobile
+→ Oui, avec des possibilités futures comme une API publique, des intégrations ou une version mobile.
 
 ***
 
 ### 🚀 Périmètre et priorités
 
-**Fonctionnalités MVP ?**  
-→
+**Fonctionnalités MVP ?**
 
-*   Saisie de texte
-*   Traduction avec IA
-*   Choix de langue
-*   Authentification
-*   Historique
-*   Résultat rapide
+* Saisie de texte
+* Traduction avec IA
+* Choix de langue
+* Authentification
+* Historique
+* Résultat rapide
+* Assistant IA lié à la traduction
 
-**Fonctionnalités plus tard ?**  
-→
+**Fonctionnalités plus tard ?**
 
-*   Personnalisation avancée
-*   Import/export de fichiers
-*   Apprentissage basé sur les corrections
-*   Intégrations externes
-
-**Contraintes délai/budget ?**  
-→ Non précisées pour le moment.
+* Personnalisation avancée
+* Import/export de fichiers
+* Apprentissage basé sur les corrections
+* Paiement réel
+* Intégrations externes
 
 ## Brief client amélioré
 
 Nous souhaitons créer une application web de traduction intelligente capable de produire des traductions plus naturelles et adaptées au contexte que les outils classiques.
 
-L'objectif est de dépasser la simple traduction mot à mot en proposant une solution plus pertinente, utilisable aussi bien par des professionnels que par le grand public.
+L'objectif est de dépasser la simple traduction mot à mot en proposant une solution pertinente, utilisable aussi bien par des professionnels que par le grand public.
 
 L'application devra être accessible directement depuis un navigateur, sans installation, avec une interface simple, moderne et intuitive.
+
 Les utilisateurs devront pouvoir :
 
-*   créer un compte et se connecter
-*   saisir un texte
-*   choisir une langue source et une langue cible
-*   indiquer un contexte dans l'interface
-*   obtenir une traduction rapide générée via une API d'intelligence artificielle
-*   poser une question à un assistant IA
+* créer un compte et se connecter
+* saisir un texte
+* choisir une langue source et une langue cible
+* indiquer un contexte dans l'interface
+* obtenir une traduction rapide générée via Gemini
+* poser une question à un assistant IA spécialisé dans la traduction
+* consulter et supprimer leur historique
 
-👉 La personnalisation du contexte est une fonctionnalité importante de la V1. Dans l'interface actuelle, un champ de contexte existe. L'objectif est de l'utiliser pour améliorer la qualité et la pertinence des traductions.
-L'utilisateur pourra reprendre ou corriger la traduction pour l'adapter à ses besoins. L'édition intégrée dans l'interface reste une amélioration à finaliser.
+La personnalisation du contexte est une fonctionnalité importante de la V1. Dans le code actuel, le champ contexte est transmis au backend et intégré au prompt envoyé à Gemini.
 
 L'application inclut :
 
-*   un système de comptes utilisateurs (inscription / connexion)
-*   un historique personnel des traductions :
-    *   texte source
-    *   texte traduit
-    *   langues
-    *   date
-*   une suppression possible des éléments de l'historique
-
-Un système d'abonnement simple est prévu pour accéder au service. Dans la version actuelle, il est représenté par :
-
-*   un champ `isSubscribed` dans Firestore
-*   une limite de 15 traductions gratuites pour les utilisateurs non abonnés
-*   une page `upgrade.html` présentant les offres
-
-Le fonctionnement intelligent repose sur :
-
-*   l'utilisation d'un modèle d'IA externe : Gemini
-*   la construction des prompts envoyés au modèle
-
-Le projet est contraint par une durée de réalisation de 1 semaine, impliquant un MVP fonctionnel.
+* un système de comptes utilisateurs
+* un historique personnel des traductions
+* une suppression possible des éléments de l'historique
+* un contrôle d'accès par token Firebase
+* une limite de 15 traductions pour les utilisateurs non abonnés
+* une page `upgrade.html` présentant l'offre premium
 
 Ne sont pas inclus dans cette version :
 
-*   import de fichiers
-*   paiement réel en ligne
-*   apprentissage automatique
-*   personnalisation avancée
-*   API publique
-*   application mobile
-*   intégrations externes
-
-L'objectif est de valider :
-
-*   la pertinence de la traduction via IA
-*   l'usage réel de l'application
-*   le principe d'un modèle d'abonnement
-
+* import de fichiers
+* paiement réel en ligne
+* apprentissage automatique
+* API publique
+* application mobile
+* intégrations externes
 
 ## Périmètre et Hors-Périmètre
 
@@ -366,57 +382,55 @@ L'objectif est de valider :
 
 Le projet consiste à développer une application web permettant :
 
-*   La **saisie de texte** dans une interface simple
-*   La **sélection de la langue source et cible**
-*   La **traduction via un modèle d'IA** (Gemini)
-*   La **prise en compte future du contexte via des instructions envoyées au modèle**
-*   L'**affichage rapide de la traduction**
-*   La **correction manuelle du texte traduit** comme besoin fonctionnel à finaliser dans l'interface
-*   Une **interface moderne, claire et intuitive**
-*   Un accès via navigateur (application en ligne nécessitant Internet)
-*   L'historique des traductions
-*   Le système de comptes utilisateurs
-*   Le contrôle d'accès par token Firebase
-*   Une page de présentation des offres premium
+* la saisie de texte
+* la sélection de la langue source et cible
+* la traduction via Gemini
+* la prise en compte du contexte dans le prompt de traduction
+* l'affichage rapide de la traduction
+* une interface moderne, claire et intuitive
+* un accès via navigateur
+* l'historique des traductions
+* le système de comptes utilisateurs
+* le contrôle d'accès par token Firebase
+* une page de présentation des offres premium
+* un assistant IA limité aux questions liées à la traduction
 
+L'intelligence repose sur :
 
-👉 L'"intelligence" repose sur :
-
-*   l'utilisation du modèle IA
-*   la façon dont on construit la requête (prompt) pour améliorer la traduction
+* l'utilisation du modèle Gemini
+* la construction des prompts
+* la gestion des réponses par le backend
 
 ***
 
-### ❌ Hors périmètre du projet (simplification pour étudiants)
+### ❌ Hors périmètre du projet
 
 Pour garantir la faisabilité, les éléments suivants sont exclus :
 
-*   Création ou entraînement d'un **modèle d'IA personnalisé**
-*   Fine-tuning ou machine learning avancé
-*   Mode hors ligne
-*   Import de fichiers complexes (PDF, Word)
-*   Paiement réel en ligne
-*   Apprentissage automatique basé sur les corrections
-*   Gestion avancée du contexte (analyse linguistique complexe)
-*   API publique
-*   Application mobile
-*   Intégrations tierces
-*   Optimisation haute performance ou gros volumes
+* création ou entraînement d'un modèle d'IA personnalisé
+* fine-tuning ou machine learning avancé
+* mode hors ligne
+* import de fichiers complexes
+* paiement réel en ligne
+* apprentissage automatique basé sur les corrections
+* API publique
+* application mobile
+* intégrations tierces
+* optimisation pour gros volumes
 
 ## Évolutions prévues
 
-Plusieurs fonctionnalités pourront être ajoutées dans des versions ultérieures afin d'enrichir l'application :
+Plusieurs fonctionnalités pourront être ajoutées dans des versions ultérieures :
 
-*   Intégration de l'import/export de fichiers (PDF, Word, etc.)
-*   Mise en place d'un apprentissage basé sur les corrections utilisateurs
-*   Gestion plus fine du contexte linguistique (analyse plus avancée du texte)
-*   Personnalisation avancée (profil, domaine métier, ton, préférences)
-*   Intégration du champ contexte dans le prompt de traduction
-*   Ajout d'un vrai système de paiement
-*   Développement d'une API publique pour permettre l'intégration avec d'autres outils
-*   Création d'une application mobile
-*   Ajout de nouvelles langues et variantes régionales
-*   Intégration avec des services externes (CMS, outils marketing, etc.)
+* import/export de fichiers
+* édition complète de la traduction dans l'interface
+* personnalisation avancée par domaine métier, profil ou ton
+* apprentissage basé sur les corrections utilisateurs
+* vrai système de paiement
+* API publique
+* application mobile
+* ajout de langues et variantes régionales
+* intégrations avec des services externes
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -424,13 +438,13 @@ Plusieurs fonctionnalités pourront être ajoutées dans des versions ultérieur
 
 ## 🎯 Objectif
 
-Développer une application web permettant de produire des **traductions plus naturelles et adaptées au contexte** que les outils classiques.
+Développer une application web permettant de produire des traductions plus naturelles et adaptées au contexte que les outils classiques.
 
-Cette première version (V1) vise à livrer un **MVP fonctionnel en 1 semaine**, simple, rapide et efficace, afin de valider :
+Cette première version vise à livrer un MVP fonctionnel, simple et efficace, afin de valider :
 
-*   la pertinence de la traduction assistée par IA
-*   l'usage réel de l'application
-*   le principe du modèle d'abonnement
+* la pertinence de la traduction assistée par IA
+* l'usage réel de l'application
+* le principe du modèle gratuit/premium
 
 ***
 
@@ -438,146 +452,139 @@ Cette première version (V1) vise à livrer un **MVP fonctionnel en 1 semaine**,
 
 L'application permet :
 
-*   La **saisie de texte**
-*   La **sélection de la langue source et cible**
-*   La **traduction via une API d'intelligence artificielle externe**
-*   La **présence d'un champ contexte dans l'interface**
-
-👉 Cette personnalisation est une **fonctionnalité clé prévue pour la V1**. Dans le code actuel, la traduction envoyée au backend utilise surtout le texte et la langue cible.
-
-*   L'**affichage rapide de la traduction**
-*   La **correction manuelle du texte traduit** comme besoin fonctionnel à finaliser
-*   Un **assistant IA** accessible depuis la page principale
+* la saisie de texte
+* la sélection de la langue source et cible
+* la traduction via Gemini
+* la présence d'un champ contexte dans l'interface
+* l'utilisation du contexte dans le prompt envoyé au modèle
+* l'affichage rapide de la traduction
+* un assistant IA accessible depuis la page principale
 
 ***
 
 ## 👤 Gestion utilisateur
 
-*   Inscription et connexion avec Firebase Authentication
-*   Déconnexion
-*   Vérification du token côté backend avec Firebase Admin
-*   Accès à un **historique des traductions**
+* inscription et connexion avec Firebase Authentication
+* déconnexion
+* vérification du token côté backend avec Firebase Admin
+* accès à un historique des traductions
 
 ### Historique :
 
-*   texte source
-*   texte traduit
-*   langue source
-*   langue cible
-*   date
-*   suppression possible d'une traduction enregistrée
+* texte source
+* texte traduit
+* langue source
+* langue cible
+* contexte
+* date
+* suppression possible d'une traduction enregistrée
 
 ***
 
 ## 💳 Modèle économique
 
-*   Accès à l'application avec un modèle gratuit/premium
-*   Système simple pour la V1
-*   Gestion par champ `isSubscribed` dans Firestore
-*   Limite actuelle :
-    *   15 traductions gratuites pour les utilisateurs non abonnés
-    *   redirection vers `upgrade.html` lorsque la limite est atteinte
+* accès à l'application avec un modèle gratuit/premium
+* système simple pour la V1
+* gestion par champ `isSubscribed` dans Firestore
+* limite actuelle de 15 traductions pour les utilisateurs non abonnés
+* redirection vers `upgrade.html` lorsque la limite est atteinte
 
 ***
 
 ## 💻 Expérience utilisateur
 
-*   Application **100% web (navigateur)**
-*   Interface **simple, moderne et intuitive**
-*   Utilisation rapide et fluide
-*   Pages principales :
-    *   traduction
-    *   connexion
-    *   inscription
-    *   historique
-    *   amélioration/premium
+* application web accessible depuis un navigateur
+* interface simple, moderne et intuitive
+* utilisation rapide et fluide
+* pages principales :
+  * traduction
+  * connexion
+  * inscription
+  * historique
+  * amélioration/premium
 
 ***
 
 ## 🧠 Fonctionnement
 
-*   Utilisation d'un **modèle d'IA externe** : Gemini
-*   L'intelligence repose sur :
-    *   le modèle choisi
-    *   la construction des prompts
-    *   la gestion des réponses par le backend
-
-👉 Le backend sélectionne Gemini via `GEMINI_MODEL` si la variable existe, puis utilise des modèles de secours si nécessaire.
+* utilisation d'un modèle d'IA externe : Gemini
+* sélection du modèle via `GEMINI_MODEL`
+* modèles de secours prévus dans `aiService.js`
+* construction d'un prompt qui tient compte du texte, de la langue cible et du contexte
+* assistant IA limité aux demandes liées à la traduction, la langue, la grammaire, le ton et la localisation
 
 ***
 
 ## ⚠️ Contraintes
 
-*   ⏱️ Durée : **1 semaine (MVP)**
-*   💻 Choix de l'API limité
-*   🌐 Dépendance à Internet
-*   🔐 Authentification simple
-*   Paiement réel non intégré dans la V1
+* dépendance à Internet
+* dépendance à Firebase et Gemini
+* authentification obligatoire
+* paiement réel non intégré dans la V1
+* HTTPS non activé directement dans le code actuel
 
 ***
 
 ## 🚧 Hors périmètre (V1)
 
-*   Modèle d'IA personnalisé
-*   Fine-tuning / machine learning avancé
-*   Import de fichiers (PDF, Word...)
-*   Paiement réel en ligne
-*   Apprentissage automatique
-*   Personnalisation avancée
-*   API publique
-*   Application mobile
-*   Intégrations externes
-*   Optimisation pour gros volumes
+* modèle d'IA personnalisé
+* fine-tuning ou machine learning avancé
+* import de fichiers
+* paiement réel en ligne
+* apprentissage automatique
+* API publique
+* application mobile
+* intégrations externes
+* optimisation pour gros volumes
 
 ***
 
 ## 🚀 Évolutions futures
 
-*   Import/export de fichiers
-*   Utilisation complète du champ contexte dans les prompts
-*   Personnalisation avancée (domaine métier, profils, ton...)
-*   Apprentissage basé sur les corrections
-*   Paiement réel pour les abonnements
-*   API publique
-*   Application mobile
-*   Ajout de langues et variantes
-*   Intégrations externes (CMS, outils...)
+* import/export de fichiers
+* édition avancée des traductions
+* personnalisation par domaine métier ou ton
+* apprentissage basé sur les corrections
+* paiement réel pour les abonnements
+* API publique
+* application mobile
+* ajout de langues et variantes
+* intégrations externes
 
 ***
 
 ## ✅ Conclusion
 
-👉 Une application web de traduction intelligente  
-👉 Avec IA Gemini, comptes utilisateurs, historique et page premium  
-👉 Réalisée en 1 semaine (MVP)
+LinguaSense est une application web de traduction intelligente avec IA Gemini, comptes utilisateurs, historique et page premium.
 
-👉 Objectif : **valider rapidement un produit utile, simple et différenciant**
+Objectif : valider rapidement un produit simple, utile et différenciant.
 
 --------------------------------------------------------------------------------------------------------------------------------------------
+
 # 👤 🎯 Cible
 
 ## 🎯 Utilisateurs principaux
 
-*   **Professionnels**
-    *   marketing
-    *   communication
-    *   support client  
-        👉 Besoin : traductions rapides, naturelles et adaptées au ton
+* **Professionnels**
+  * marketing
+  * communication
+  * support client
+  * besoin : traductions rapides, naturelles et adaptées au ton
 
-*   **Grand public**
-    *   étudiants
-    *   utilisateurs occasionnels  
-        👉 Besoin : outil simple et efficace
+* **Grand public**
+  * étudiants
+  * utilisateurs occasionnels
+  * besoin : outil simple et efficace
 
 ***
 
 ## ✅ Besoins clés
 
-*   Traduire rapidement
-*   Obtenir un résultat **naturel (pas mot à mot)**
-*   Adapter le **contexte ou le ton**
-*   Conserver ses traductions
-*   Disposer d'un assistant IA pour clarifier une traduction
+* traduire rapidement
+* obtenir un résultat naturel
+* adapter le contexte ou le ton
+* conserver ses traductions
+* disposer d'un assistant IA pour clarifier une traduction
 
 ***
 
@@ -585,27 +592,23 @@ L'application permet :
 
 ## 🔹 Étapes principales
 
-1.  Arrivée sur le site
-2.  Inscription ou connexion
-3.  Accès à l'interface principale
-4.  Saisie du texte
-5.  Choix :
-    *   langue source
-    *   langue cible
-    *   contexte optionnel
-6.  Clique sur **"Traduire"**
-7.  Affichage du résultat
-8.  Correction possible par reprise manuelle du résultat
-9.  Sauvegarde automatique dans l'historique
-10. Consultation de l'historique
-11. Suppression possible d'une traduction
-12. Accès à la page premium si la limite gratuite est atteinte
+1. Arrivée sur le site
+2. Inscription ou connexion
+3. Accès à l'interface principale
+4. Saisie du texte
+5. Choix de la langue source, de la langue cible et du contexte optionnel
+6. Clic sur **Traduire**
+7. Affichage du résultat
+8. Sauvegarde automatique dans l'historique
+9. Consultation de l'historique
+10. Suppression possible d'une traduction
+11. Accès à la page premium si la limite gratuite est atteinte
 
 ***
 
 ## ✅ Résumé simple
 
-👉 **Connexion → Traduction → Résultat → Historique → Premium si nécessaire**
+**Connexion → Traduction → Résultat → Historique → Premium si nécessaire**
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -613,18 +616,20 @@ L'application permet :
 
 ## 🔷 Vision globale
 
-👉 Architecture simple en 3 parties :
+Architecture simple en 3 parties :
 
 **Frontend → Backend → API IA + Base de données**
 
-    Utilisateur
-       ↓
-    Frontend (HTML, CSS, JS)
-       ↓
-    Backend (Node.js / Express)
-       ↓        ↓
-    Gemini     Firebase
-    API IA     (Auth + Firestore)
+```text
+Utilisateur
+   ↓
+Frontend (HTML, CSS, JavaScript)
+   ↓
+Backend (Node.js / Express)
+   ↓        ↓
+Gemini     Firebase
+API IA     Auth + Firestore
+```
 
 ***
 
@@ -632,32 +637,24 @@ L'application permet :
 
 ## 🔧 Technologies
 
-*   Figma (maquettes)
-*   HTML
-*   CSS
-*   JavaScript
-*   Firebase Web SDK
+* HTML
+* CSS
+* JavaScript modules
+* Firebase Web SDK
 
 ## ✅ Rôle
 
-*   Interface utilisateur
-*   Inscription, connexion et déconnexion
-*   Interaction avec l'utilisateur
-*   Envoi des requêtes au backend avec token Firebase
-*   Affichage des traductions
-*   Sauvegarde et lecture de l'historique dans Firestore
+* interface utilisateur
+* inscription, connexion et déconnexion
+* interaction avec l'utilisateur
+* envoi des requêtes au backend avec token Firebase
+* affichage des traductions
+* sauvegarde et lecture de l'historique dans Firestore
 
 ## 💡 Explication des choix
 
-*   **HTML/CSS/JS** :
-    *   Simple et rapide pour un MVP
-    *   Aucune complexité inutile
-*   **Firebase Web SDK** :
-    *   Facilite l'authentification côté client
-    *   Permet d'accéder à Firestore
-*   **Figma** :
-    *   Permet de concevoir une UI claire avant dev
-*   ✅ Parfait pour une V1 en 1 semaine
+* **HTML/CSS/JS** : simple, rapide et adapté au MVP
+* **Firebase Web SDK** : facilite l'authentification côté client et l'accès à Firestore
 
 ***
 
@@ -665,35 +662,28 @@ L'application permet :
 
 ## 🔧 Technologies
 
-*   Node.js
-*   Express.js
-*   JavaScript
-*   Firebase Admin
-*   Fichier `.env`
+* Node.js
+* Express.js
+* JavaScript
+* Firebase Admin
+* Fichier `.env`
 
 ## ✅ Rôle
 
-*   Servir le frontend
-*   Gérer les requêtes API
-*   Vérifier l'authentification avec les tokens Firebase
-*   Contrôler la limite gratuite de traductions
-*   Lire le statut d'abonnement dans Firestore
-*   Construire le **prompt IA**
-*   Appeler l'API Gemini
-*   Renvoyer la traduction au frontend
+* servir le frontend
+* gérer les routes API
+* vérifier l'authentification avec les tokens Firebase
+* contrôler la limite gratuite de traductions
+* lire le statut d'abonnement dans Firestore
+* construire le prompt IA
+* appeler l'API Gemini
+* renvoyer la traduction ou la réponse IA au frontend
 
 ## 💡 Explication des choix
 
-*   **Node.js / Express.js** :
-    *   Rapide à mettre en place
-    *   Même langage que le frontend (JS)
-    *   Idéal pour projets courts (MVP)
-*   **Firebase Admin** :
-    *   Vérifie les utilisateurs côté serveur
-    *   Protège les routes API
-*   **.env** :
-    *   Stocker les clés API de façon sécurisée
-    *   Éviter de les exposer sur GitHub
+* **Node.js / Express.js** : rapide à mettre en place et cohérent avec le JavaScript frontend
+* **Firebase Admin** : vérifie les utilisateurs côté serveur
+* **.env** : stocke les clés API et identifiants sensibles
 
 ***
 
@@ -701,22 +691,20 @@ L'application permet :
 
 ## 🔧 Technologies
 
-*   Gemini
-*   Package `@google/generative-ai`
+* Gemini
+* Package `@google/generative-ai`
 
 ## ✅ Rôle
 
-*   Générer la traduction
-*   Répondre aux questions de l'assistant IA
-*   Permettre une amélioration future de la prise en compte du contexte
+* générer la traduction
+* répondre aux questions de l'assistant IA
+* prendre en compte le contexte fourni par l'utilisateur
 
 ## 💡 Explication des choix
 
-*   Pas besoin de créer une IA
-*   Gain de temps important
-*   Qualité déjà optimisée
-*   Possibilité de changer de modèle avec `GEMINI_MODEL`
-
+* pas besoin de créer une IA personnalisée
+* gain de temps important
+* possibilité de changer de modèle avec `GEMINI_MODEL`
 
 ***
 
@@ -724,27 +712,21 @@ L'application permet :
 
 ## 🔧 Technologie
 
-*   Firebase Firestore
-*   Firebase Authentication
+* Firebase Firestore
+* Firebase Authentication
 
 ## ✅ Rôle
 
-*   Stocker :
-    *   utilisateurs
-    *   statut d'abonnement
-    *   traductions
-    *   historique
-*   Gérer les comptes via Firebase Authentication
+* stocker les utilisateurs
+* stocker le statut d'abonnement
+* stocker les traductions
+* gérer l'historique personnel
+* gérer les comptes via Firebase Authentication
 
 ## 💡 Explication des choix
 
-*   **Firestore** :
-    *   Simple à utiliser
-    *   Pas besoin de gérer un serveur SQL
-    *   Adapté à un MVP
-*   **Firebase Authentication** :
-    *   Gestion rapide des comptes
-    *   Tokens vérifiables par le backend
+* **Firestore** : simple à utiliser et adapté à un MVP
+* **Firebase Authentication** : gestion rapide des comptes et tokens vérifiables par le backend
 
 ***
 
@@ -752,51 +734,50 @@ L'application permet :
 
 ## 🔧 Technologie
 
-*   GitHub
+* GitHub
 
 ## ✅ Rôle
 
-*   Stockage du code
-*   Versioning
-*   Collaboration
+* stockage du code
+* versioning
+* collaboration
 
 ## 💡 Explication des choix
 
-*   Standard du développement
-*   Simple et efficace
+* standard du développement
+* simple et efficace
 
 ***
 
 # 🔄 Workflow technique
 
-1.  L'utilisateur saisit un texte (frontend)
-2.  Le frontend vérifie que l'utilisateur est connecté
-3.  Le frontend récupère le token Firebase
-4.  Le frontend envoie la requête au backend
-5.  Le backend :
-    *   vérifie le token Firebase
-    *   contrôle la limite gratuite
-    *   construit le prompt
-    *   appelle Gemini
-6.  Gemini renvoie la traduction
-7.  Le backend renvoie la réponse au frontend
-8.  Le frontend affiche le résultat
-9.  Le frontend enregistre la traduction dans Firestore
-10. L'utilisateur peut consulter ou supprimer l'élément depuis l'historique
+1. L'utilisateur saisit un texte dans le frontend
+2. Le frontend vérifie que l'utilisateur est connecté
+3. Le frontend récupère le token Firebase
+4. Le frontend envoie la requête au backend
+5. Le backend vérifie le token Firebase
+6. Le backend contrôle la limite gratuite
+7. Le backend construit le prompt avec le texte, la langue cible et le contexte
+8. Le backend appelle Gemini
+9. Gemini renvoie la traduction ou la réponse IA
+10. Le backend renvoie la réponse au frontend
+11. Le frontend affiche le résultat
+12. Le frontend enregistre la traduction dans Firestore
+13. L'utilisateur peut consulter ou supprimer l'élément depuis l'historique
 
 ***
 
 # ✅ Résumé des technologies
 
-| Partie          | Technologie                         |
-| --------------- | ----------------------------------- |
-| Frontend        | HTML, CSS, JavaScript               |
-| Design          | Figma                               |
-| Backend         | Node.js, Express.js                 |
-| API IA          | Gemini                              |
-| Base de données | Firebase Firestore                  |
-| Authentification| Firebase Authentication/Admin       |
-| Sécurité        | `.env`, tokens Firebase             |
-| Versioning      | GitHub                              |
+| Partie | Technologie |
+| --- | --- |
+| Frontend | HTML, CSS, JavaScript |
+| Backend | Node.js, Express.js |
+| API IA | Gemini |
+| Package IA | `@google/generative-ai` |
+| Base de données | Firebase Firestore |
+| Authentification | Firebase Authentication / Firebase Admin |
+| Sécurité | `.env`, tokens Firebase |
+| Versioning | GitHub |
 
 --------------------------------------------------------------------------------------------------------------------------------------------
