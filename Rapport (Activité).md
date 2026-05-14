@@ -14,6 +14,7 @@
 
 * Prompting (V1 du projet)
 * Création du GitHub Repository
+* Rapport
 * Frontend
 
   * upgrade.html
