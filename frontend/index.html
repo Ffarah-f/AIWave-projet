@@ -49,22 +49,48 @@
 
     <main id="translatorPage" class="translator-container">
         <h1 id="translatorTitle">Traducteur IA Multilingue</h1>
+
+        <!-- Translation counter for free users -->
+        <div id="translationCounter" class="translation-counter" style="display: none;">
+            <span id="counterText">Traductions utilisées: <strong id="counterValue">0/15</strong></span>
+        </div>
+
         <section class="translation-box">
             <div class="top-row">
                 <div class="lang-selectors">
                     <label for="source-lang" class="sr-only">Langue source</label>
                     <select id="source-lang" name="source-lang" class="select-box">
                         <option value="auto">Langue d'origine</option>
+                        <option value="ar">Arabe</option>
+                        <option value="de">Allemand</option>
                         <option value="fr">Français</option>
                         <option value="en">Anglais</option>
                         <option value="es">Espagnol</option>
+                        <option value="it">Italien</option>
+                        <option value="ja">Japonais</option>
+                        <option value="ko">Coreen</option>
+                        <option value="nl">Neerlandais</option>
+                        <option value="pt">Portugais</option>
+                        <option value="ru">Russe</option>
+                        <option value="tr">Turc</option>
+                        <option value="zh">Chinois</option>
                     </select>
                     <label for="target-lang" class="sr-only">Langue cible</label>
                     <select id="target-lang" name="target-lang" class="select-box">
                         <option value="">Langue cible</option>
+                        <option value="ar">Arabe</option>
+                        <option value="de">Allemand</option>
                         <option value="en">Anglais</option>
                         <option value="es">Espagnol</option>
                         <option value="fr">Français</option>
+                        <option value="it">Italien</option>
+                        <option value="ja">Japonais</option>
+                        <option value="ko">Coreen</option>
+                        <option value="nl">Neerlandais</option>
+                        <option value="pt">Portugais</option>
+                        <option value="ru">Russe</option>
+                        <option value="tr">Turc</option>
+                        <option value="zh">Chinois</option>
                     </select>
                 </div>
                 <label for="context" class="sr-only">Contexte</label>
@@ -81,6 +107,21 @@
             </div>
         </section>
         <button id="translateBtn" class="btn-translate" type="button" aria-label="Traduire">Traduire</button>
+
+        <section class="chat-box" aria-labelledby="chatTitle">
+            <div class="chat-header">
+                <h2 id="chatTitle">Assistant IA</h2>
+            </div>
+            <div id="chatMessages" class="chat-messages" aria-live="polite">
+                <p class="chat-placeholder">Posez une question sur une traduction, une expression ou un contexte.</p>
+            </div>
+            <form id="chatForm" class="chat-form">
+                <label for="chat-input" class="sr-only">Message pour l'assistant IA</label>
+                <textarea id="chat-input" class="chat-input" placeholder="Votre message..."
+                    aria-label="Message pour l'assistant IA"></textarea>
+                <button id="chatBtn" class="btn-chat" type="submit">Envoyer</button>
+            </form>
+        </section>
     </main>
 
     <footer class="footer">

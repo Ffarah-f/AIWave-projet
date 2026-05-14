@@ -6,6 +6,13 @@ import {
     onAuthStateChanged,
     updateProfile
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { db } from "./firebase.js";
+import {
+    collection,
+    setDoc,
+    doc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 // ─── Auth state: update navbar on every page ────────────────────────────────
 onAuthStateChanged(auth, (user) => {
@@ -52,6 +59,15 @@ if (registerForm) {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             // Save the display name on the Firebase profile
             await updateProfile(userCredential.user, { displayName: name });
+            
+            // Create user document with subscription status (non-subscribed by default)
+            await setDoc(doc(db, "users", userCredential.user.uid), {
+                displayName: name,
+                email: email,
+                isSubscribed: false,
+                createdAt: serverTimestamp()
+            });
+            
             // Redirect to the translator after successful registration
             window.location.href = "index.html";
         } catch (error) {

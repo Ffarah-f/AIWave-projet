@@ -1,9 +1,11 @@
 const aiService = require('../services/aiService');
+const admin = require('firebase-admin');
 
 class TranslateController {
     async translate(req, res) {
         try {
             const { text, language } = req.body;
+            const userId = req.user.uid;
 
             // Validation des données d'entrée
             if (!text || !language) {
@@ -13,6 +15,37 @@ class TranslateController {
                 });
             }
 
+            // Check user subscription status and translation count
+            const db = admin.firestore();
+            const userDoc = await db.collection('users').doc(userId).get();
+            const isSubscribed = userDoc.exists && userDoc.data().isSubscribed === true;
+
+            let translationCount = 0;
+            let remainingTranslations = 15;
+
+            if (!isSubscribed) {
+                const translationsSnapshot = await db
+                    .collection('users')
+                    .doc(userId)
+                    .collection('translations')
+                    .count()
+                    .get();
+                
+                translationCount = translationsSnapshot.data().count;
+                remainingTranslations = Math.max(0, 15 - translationCount);
+
+                // Limit non-subscribed users to 15 translations
+                if (translationCount >= 15) {
+                    return res.status(403).json({
+                        error: 'Limite atteinte',
+                        message: 'Vous avez atteint la limite de 15 traductions gratuites.',
+                        limitReached: true,
+                        translationCount: translationCount,
+                        remainingTranslations: 0
+                    });
+                }
+            }
+
             // Appel du service AI
             const translatedText = await aiService.translateText(text, language);
 
@@ -20,7 +53,10 @@ class TranslateController {
                 success: true,
                 originalText: text,
                 translatedText: translatedText,
-                language: language
+                language: language,
+                isSubscribed: isSubscribed,
+                translationCount: translationCount + 1,
+                remainingTranslations: remainingTranslations - 1
             });
 
         } catch (error) {

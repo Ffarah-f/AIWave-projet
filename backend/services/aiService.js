@@ -46,6 +46,27 @@ class AIService {
         return true;
     }
 
+    _normalizeLanguage(language) {
+        const languages = {
+            ar: 'Arabic',
+            de: 'German',
+            en: 'English',
+            es: 'Spanish',
+            fr: 'French',
+            it: 'Italian',
+            ja: 'Japanese',
+            ko: 'Korean',
+            nl: 'Dutch',
+            pt: 'Portuguese',
+            ru: 'Russian',
+            tr: 'Turkish',
+            zh: 'Chinese',
+        };
+
+        const normalizedLanguage = String(language || '').trim();
+        return languages[normalizedLanguage.toLowerCase()] || normalizedLanguage;
+    }
+
     async _runPrompt(prompt) {
         let lastError = null;
 
@@ -70,7 +91,14 @@ class AIService {
 
     async translateText(text, language) {
         try {
-            const prompt = `Tu es un traducteur expert. Traduis ce texte en ${language} : ${text}`;
+            const targetLanguage = this._normalizeLanguage(language);
+            const prompt = `You are an expert translator.
+Translate the text below into ${targetLanguage}.
+Return only the translated text, with no explanation.
+If the context is ambiguous, use the most common/basic translation.
+
+Text:
+${text}`;
             return await this._runPrompt(prompt);
         } catch (error) {
             console.error('Erreur lors de la traduction:', error.message);
