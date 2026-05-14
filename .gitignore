@@ -10,4 +10,4 @@ serviceAccountKey.json
 *firebase-adminsdk*.json
 
 # Local HTTPS certificates
-backend/certs/
+certs/
