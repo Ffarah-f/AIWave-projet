@@ -1,19 +1,13 @@
-# Environment variables (at any depth)
-**/.env
-**/.env.*
+# Environment variables
+.env
 
 # Node
 node_modules/
 npm-debug.log*
 
-# OS
-.DS_Store
-Thumbs.db
-
-# IDE
-.vscode/
-.idea/
-
+# Firebase/Admin secrets
 serviceAccountKey.json
-backend/linguasense-726ba-firebase-adminsdk-fbsvc-d9d809130d.json
+*firebase-adminsdk*.json
+
+# Local HTTPS certificates
 backend/certs/
